@@ -1,4 +1,4 @@
-import { User } from '../models/user.model';
+import { Challenge } from '../models/challenge.model';
 
 /**
  * @class View
@@ -17,10 +17,10 @@ export class ChallengeView {
   private form: HTMLElement;
   private submitButton: HTMLElement;
   private inputName: HTMLInputElement;
-  private inputAge: HTMLInputElement;
+  private inputWinLossRecord: HTMLInputElement;
   private title: HTMLElement;
   private userList: HTMLElement;
-  private _temporaryAgeText: string;
+  private _temporaryWinLossText: string;
 
   constructor() {
     this.app = document.querySelector('#root');
@@ -33,36 +33,36 @@ export class ChallengeView {
       name: 'name'
     });
     this.createInput({
-      key: 'inputAge',
+      key: 'inputWinLossRecord',
       type: 'text',
-      placeholder: 'Age',
-      name: 'age'
+      placeholder: 'Win/Loss',
+      name: 'winLossRecord'
     });
 
     this.submitButton = this.createElement('button');
     this.submitButton.textContent = 'Submit';
 
-    this.form.append(this.inputName, this.inputAge, this.submitButton);
+    this.form.append(this.inputName, this.inputWinLossRecord, this.submitButton);
 
     this.title = this.createElement('h1');
-    this.title.textContent = 'Users';
+    this.title.textContent = 'Challenge';
     this.userList = this.createElement('ul', 'user-list');
     this.app.append(this.title, this.form, this.userList);
 
-    this._temporaryAgeText = '';
+    this._temporaryWinLossText = '';
     this._initLocalListeners();
   }
 
   get _nameText() {
     return this.inputName.value;
   }
-  get _ageText() {
-    return this.inputAge.value;
+  get _winLossRecordText() {
+    return this.inputWinLossRecord.value;
   }
 
   _resetInput() {
     this.inputName.value = '';
-    this.inputAge.value = '';
+    this.inputWinLossRecord.value = '';
   }
 
   createInput(
@@ -83,7 +83,7 @@ export class ChallengeView {
     return element;
   }
 
-  displayUsers(users: User[]) {
+  displayUsers(users: Challenge[]) {
     // Delete all nodes
     while (this.userList.firstChild) {
       this.userList.removeChild(this.userList.firstChild);
@@ -102,7 +102,7 @@ export class ChallengeView {
 
         const checkbox = this.createElement('input') as HTMLInputElement;
         checkbox.type = 'checkbox';
-        checkbox.checked = user.complete;
+        checkbox.checked = user.online;
 
         const spanUser = this.createElement('span');
 
@@ -110,17 +110,17 @@ export class ChallengeView {
         spanAge.contentEditable = 'true';
         spanAge.classList.add('editable');
 
-        if (user.complete) {
+        if (user.online) {
           const strikeName = this.createElement('s');
           strikeName.textContent = user.name;
           spanUser.append(strikeName);
 
           const strikeAge = this.createElement('s');
-          strikeAge.textContent = user.age;
+          strikeAge.textContent = user.winLossRecord;
           spanAge.append(strikeAge);
         } else {
           spanUser.textContent = user.name;
-          spanAge.textContent = user.age;
+          spanAge.textContent = user.winLossRecord;
         }
 
         const deleteButton = this.createElement('button', 'delete');
@@ -136,7 +136,7 @@ export class ChallengeView {
   _initLocalListeners() {
     this.userList.addEventListener('input', event => {
       if ((event.target as any).className === 'editable') {
-        this._temporaryAgeText = (event.target as any).innerText;
+        this._temporaryWinLossText = (event.target as any).innerText;
       }
     });
   }
@@ -148,7 +148,7 @@ export class ChallengeView {
       if (this._nameText) {
         handler({
           name: this._nameText,
-          age: this._ageText
+          winLossRecord: this._winLossRecordText
         });
         this._resetInput();
       }
@@ -167,12 +167,12 @@ export class ChallengeView {
 
   bindEditUser(handler: Function) {
     this.userList.addEventListener('focusout', event => {
-      if (this._temporaryAgeText) {
+      if (this._temporaryWinLossText) {
         const id = (event.target as any).parentElement.id;
-        const key = 'age';
+        const key = 'winLossRecord';
 
-        handler(id, { [key]: this._temporaryAgeText });
-        this._temporaryAgeText = '';
+        handler(id, { [key]: this._temporaryWinLossText });
+        this._temporaryWinLossText = '';
       }
     });
   }

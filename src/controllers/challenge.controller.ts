@@ -1,5 +1,5 @@
-import { User } from '../models/user.model';
-import { ChallengeService } from '../services/user.service';
+import { Challenge } from '../models/challenge.model';
+import { ChallengeService } from '../services/challenge.service';
 import { ChallengeView } from '../views/challenge.view';
 
 /**
@@ -23,15 +23,15 @@ export class ChallengeController {
     this.onUserListChanged(this.userService.users);
   }
 
-  onUserListChanged = (users: User[]) => {
+  onUserListChanged = (users: Challenge[]) => {
     this.userView.displayUsers(users);
   };
 
-  handleAddUser = (user: User) => {
+  handleAddUser = (user: Challenge) => {
     this.userService.add(user);
   };
 
-  handleEditUser = (id: string, user: User) => {
+  handleEditUser = (id: string, user: Challenge) => {
     this.userService.edit(id, user);
   };
 

@@ -1,4 +1,4 @@
-import { User, UserDto } from '../models/user.model';
+import { Challenge } from '../models/challenge.model';
 
 /**
  * @class Service
@@ -6,30 +6,30 @@ import { User, UserDto } from '../models/user.model';
  * Manages the data of the application.
  */
 export class ChallengeService {
-  public users: User[];
+  public users: Challenge[];
   private onUserListChanged: Function;
 
   constructor() {
-    const users: UserDto[] = JSON.parse(localStorage.getItem('users')) || [];
-    this.users = users.map(user => new User(user));
+    const users: Challenge[] = JSON.parse(localStorage.getItem('users')) || [];
+    this.users = users.map(user => new Challenge(user));
   }
 
   bindUserListChanged(callback: Function) {
     this.onUserListChanged = callback;
   }
 
-  _commit(users: User[]) {
+  _commit(users: Challenge[]) {
     this.onUserListChanged(users);
     localStorage.setItem('users', JSON.stringify(users));
   }
 
-  add(user: User) {
-    this.users.push(new User(user));
+  add(user: Challenge) {
+    this.users.push(new Challenge(user));
 
     this._commit(this.users);
   }
 
-  edit(id: string, userToEdit: User) {
+  edit(id: string, userToEdit: Challenge) {
     let user = this.users
       .find(({id:user_id})=>user_id===id);
     Object.assign(user,userToEdit);
@@ -45,7 +45,7 @@ export class ChallengeService {
 
   toggle(_id: string) {
     this.users = this.users.map(user =>
-      user.id === _id ? new User({ ...user, complete: !user.complete }) : user
+      user.id === _id ? new Challenge({ ...user, online: !user.online }) : user
     );
 
     this._commit(this.users);

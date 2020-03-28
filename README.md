@@ -158,7 +158,7 @@ The models will have the following fields:
 * **age**. The age of the users.
 * **complete**. Boolean that lets you know whether we can cross the user off the list.
 
-The **User class** has been typed using TypeScript. However, the User constructor receives a plain object that will be provided from LocalStorage or from the user data input through the form. This plain object must comply with the **UserDto** interface in such a way that any plain object cannot be instantiated but those that satisfy the defined interface.
+The **User class** has been typed using TypeScript. However, the User constructor receives a plain object that will be provided from LocalStorage or from the user data input through the form. This plain object must comply with the **User** interface in such a way that any plain object cannot be instantiated but those that satisfy the defined interface.
 
 The ```user.model.ts``` is shown below:
 
@@ -169,7 +169,7 @@ The ```user.model.ts``` is shown below:
  * Manages the data of the application.
  */
 
-export interface UserDto {
+export interface User {
   name: string;
   age: string;
   complete: boolean;
@@ -182,7 +182,7 @@ export class User {
   public complete: boolean;
 
   constructor(
-    { name, age, complete }: UserDto = {
+    { name, age, complete }: User = {
       name: null,
       age: null,
       complete: false
@@ -217,12 +217,12 @@ The constructor of our class is as follows:
 
 ```typescript
 constructor() {
-  const users: UserDto[] = JSON.parse(localStorage.getItem('users')) || [];
+  const users: User[] = JSON.parse(localStorage.getItem('users')) || [];
   this.users = users.map(user => new User(user));
 }
 ```
 
-Note that we have defined a class variable called ```users``` that stores all users once they have been transformed from a plain object (**UserDto**) to a prototyped object of the ```User``` class.
+Note that we have defined a class variable called ```users``` that stores all users once they have been transformed from a plain object (**User**) to a prototyped object of the ```User``` class.
 
 The next thing we must define in the service will be each of the operations we want to develop. These operations are shown below using TypeScript:
 
@@ -279,7 +279,7 @@ This method invokes a ```callback``` function that has been binded when creating
 The file ```user.service.ts``` is as follows:
 
 ```typescript
-import { User, UserDto } from '../models/user.model';
+import { User, User } from '../models/user.model';
 
 /**
  * @class Service
@@ -291,7 +291,7 @@ export class UserService {
   private onUserListChanged: Function;
 
   constructor() {
-    const users: UserDto[] = JSON.parse(localStorage.getItem('users')) || [];
+    const users: User[] = JSON.parse(localStorage.getItem('users')) || [];
     this.users = users.map(user => new User(user));
   }
 

@@ -1,5 +1,5 @@
-import { ChallengeController } from './controllers/user.controller';
-import { ChallengeService } from './services/user.service';
+import { ChallengeController } from './controllers/challenge.controller';
+import { ChallengeService } from './services/challenge.service';
 import { ChallengeView } from './views/challenge.view';
 import { LoginView } from './views/login.view';
 import { SignupView } from './views/signup.view';

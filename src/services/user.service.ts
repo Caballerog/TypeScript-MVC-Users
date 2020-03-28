@@ -30,14 +30,9 @@ export class UserService {
   }
 
   edit(id: string, userToEdit: User) {
-    this.users = this.users.map(user =>
-      user.id === id
-        ? new User({
-            ...user,
-            ...userToEdit
-          })
-        : user
-    );
+    let user = this.users
+      .find(({id:user_id})=>user_id===id);
+    Object.assign(user,userToEdit);
 
     this._commit(this.users);
   }

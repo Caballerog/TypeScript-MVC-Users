@@ -5,7 +5,7 @@ import { User, UserDto } from '../models/user.model';
  *
  * Manages the data of the application.
  */
-export class UserService {
+export class ChallengeService {
   public users: User[];
   private onUserListChanged: Function;
 

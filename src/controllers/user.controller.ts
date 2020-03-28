@@ -1,6 +1,6 @@
 import { User } from '../models/user.model';
-import { UserService } from '../services/user.service';
-import { UserView } from '../views/user.view';
+import { ChallengeService } from '../services/user.service';
+import { ChallengeView } from '../views/challenge.view';
 
 /**
  * @class Controller
@@ -10,8 +10,8 @@ import { UserView } from '../views/user.view';
  * @param model
  * @param view
  */
-export class UserController {
-  constructor(private userService: UserService, private userView: UserView) {
+export class ChallengeController {
+  constructor(private userService: ChallengeService, private userView: ChallengeView) {
     // Explicit this binding
     this.userService.bindUserListChanged(this.onUserListChanged);
     this.userView.bindAddUser(this.handleAddUser);

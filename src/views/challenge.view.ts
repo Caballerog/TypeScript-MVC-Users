@@ -12,7 +12,7 @@ interface Input {
   placeholder: string;
   name: string;
 }
-export class UserView {
+export class ChallengeView {
   private app: HTMLElement;
   private form: HTMLElement;
   private submitButton: HTMLElement;
@@ -23,7 +23,7 @@ export class UserView {
   private _temporaryAgeText: string;
 
   constructor() {
-    this.app = this.getElement('#root');
+    this.app = document.querySelector('#root');
 
     this.form = this.createElement('form');
     this.createInput({
@@ -73,22 +73,14 @@ export class UserView {
       name: 'default'
     }
   ) {
-    this[key] = this.createElement('input');
-    this[key].type = type;
-    this[key].placeholder = placeholder;
-    this[key].name = name;
+    this[key] = 
+    Object.assign(this.createElement('input'), { type, placeholder, name });
   }
 
   createElement(tag: string, className?: string) {
     const element = document.createElement(tag);
-
     if (className) element.classList.add(className);
-
     return element;
-  }
-
-  getElement(selector: string): HTMLElement {
-    return document.querySelector(selector);
   }
 
   displayUsers(users: User[]) {

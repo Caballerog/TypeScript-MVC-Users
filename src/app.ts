@@ -31,6 +31,7 @@ switch (page) {
         break;
     default:
         const { origin, pathname } = location;
-        location.replace(origin+pathname+'?page=login');
+        // redirect bad/missing page params to login
+        location.replace(origin+pathname+'?page=login'); 
     break;
 }

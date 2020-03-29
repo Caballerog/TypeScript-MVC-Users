@@ -16,4 +16,4 @@ export interface GameTokens {
     [id:string/*TokenID*/] : GameToken;
 }
 
-export type LocationCollection = TokenID[];
+export type TokenCollection = TokenID[];

@@ -4,6 +4,9 @@ import { ChallengeView } from './views/challenge.view';
 import { LoginView } from './views/login.view';
 import { SignupView } from './views/signup.view';
 import { HomeView } from './views/home.view';
+import { GameView } from './views/game.view';
+import { GameService } from './services/game.service';
+import { GameController } from './controllers/game.controller';
 
 export type Page = 'login' | 'signup' | 'home' | 'challenge' | 'game' | 'demo'; 
 
@@ -23,6 +26,7 @@ switch (page) {
         app = new ChallengeController(new ChallengeService(), new ChallengeView());
         break;
     case 'game':
+        app = new GameController(new GameService(), new GameView());
         break;
     case 'demo':
         break;        

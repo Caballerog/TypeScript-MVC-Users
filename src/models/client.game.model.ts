@@ -1,4 +1,6 @@
-import { Token, TokenID } from './exercise.model';
+import { ExerciseToken /*, TokenID*/ } from './exercise.model';
+
+export type Location = 'conveyor' | 'token bank' | 'code';
 
 // One repository for tokens (with three location states)
 // may help avoid invalid duplication or ommission of tokens
@@ -6,8 +8,8 @@ import { Token, TokenID } from './exercise.model';
 // compare this central state with inclusion within the three
 // location collections...  Note: we never add or remove
 // tokens from the tokenLocation collection...
-interface GameToken extends Token {
-    location : 'conveyor' | 'bank' | 'code';
+export interface GameToken extends ExerciseToken {
+    location : Location;
 }
 
 // Store game tokens in an object 
@@ -16,4 +18,3 @@ export interface GameTokens {
     [id:string/*TokenID*/] : GameToken;
 }
 
-export type TokenCollection = TokenID[];

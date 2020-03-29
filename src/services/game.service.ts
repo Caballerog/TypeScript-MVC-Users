@@ -1,5 +1,4 @@
-import { Challenge } from '../models/challenge.model';
-import { GameToken, GameTokens, Location } from '../models/client.game.model';
+import { TokenID, GameToken, GameTokens, Location } from '../models/client.game.model';
 import { sampleGameTokens } from '../models/client.game.mock';
 import { TokenID } from '../models/exercise.model';
 
@@ -12,9 +11,14 @@ type OnTokenArrayChanged = (x : GameToken[]) => (void);
  */
 export class GameService {
   private tokens : GameTokens;
-  private conveyor : TokenID[] = [];
-  private tokenBank : TokenID[] = [];
-  private code : TokenID[] = [];
+  private tokenLocationArray : {
+    [location:string/*Location*/] : TokenID[]
+  } = {  
+    // careful, 'location' key not validated by TS at present...
+    'conveyor' : [],
+    'token bank' : [],
+    'code' : []
+  };
 
   private onConveyorChanged : OnTokenArrayChanged;
   private onTokenBankChanged : OnTokenArrayChanged;
@@ -32,7 +36,7 @@ export class GameService {
       }, {} as GameTokens);
     // ... and reference all tokens in the ordered
     // conveyor array...
-    this.conveyor = Object.keys(this.tokens);
+    this.tokenLocationArray['conveyor'] = Object.keys(this.tokens);
   }
 
   public bindConveyorChanged(callback: OnTokenArrayChanged) {
@@ -46,7 +50,7 @@ export class GameService {
       switch (location) {
         case 'conveyor':
           this.onConveyorChanged(
-            this.conveyor.map(tokenID=>this.tokens[tokenID])
+            this.tokenLocationArray[location].map(tokenID=>this.tokens[tokenID])
           );
           break;
       }

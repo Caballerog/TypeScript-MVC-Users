@@ -16,12 +16,9 @@ html {
   padding: 0 1rem;
 }
 
-form {
-  display: flex;
-  margin-bottom: 2rem;
-}
 
 [type="text"],
+[type="password"],
 button {
   display: inline-block;
   -webkit-appearance: none;
@@ -39,12 +36,14 @@ button {
   margin: 0 .5rem;
 }
 
-[type="text"] {
-  width: 100%;
+input {
+  width: 200px;
 }
 
 [type="text"]:active,
-[type="text"]:focus {
+[type="text"]:focus,
+[type="password"]:focus
+{
   outline: 0;
   border: 2px solid #007bff;
 }
@@ -87,4 +86,10 @@ li span:focus {
   outline: 0;
   border: 2px solid #007bff;
   background: rgba(179, 207, 255, 0.52)
+}
+
+div {
+  display: block;
+  padding: 10px;
+  text-align: center;
 }

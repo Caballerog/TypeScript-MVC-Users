@@ -16,7 +16,7 @@ export class GameView {
             </div>
             <div>
                 <h2>Token Bank</h2>
-                <ul id='tokenbank' />
+                <ul id='token bank' />
             </div>
             <div>
                 <h2>Code</h2>
@@ -24,7 +24,7 @@ export class GameView {
             </div>
         `;
         this.app.innerHTML = html;
-        this.ulConveyor = document.getElementById('conveyor') as HTMLUListElement;
+        this.ulConveyor = document.getElementById('token bank') as HTMLUListElement;
     }
 
     public displayConveyor(tokens : GameToken[]) {

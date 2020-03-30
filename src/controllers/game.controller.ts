@@ -13,7 +13,7 @@ import { GameView } from '../views/game.view';
 export class GameController {
   constructor(private gameService: GameService, private gameView: GameView) {
     // Explicit this binding
-    this.gameService.bindConveyorChanged(this.onConveyorChanged);
+    this.gameService.bindTokenLocationChanged('conveyor',this.onConveyorChanged);
     
 
     // Display initial users

@@ -1,4 +1,4 @@
-import { TokenID, GameToken, GameTokens, Location } from '../models/client.game.model';
+import { GameToken, GameTokens, Location } from '../models/client.game.model';
 import { sampleGameTokens } from '../models/client.game.mock';
 import { TokenID } from '../models/exercise.model';
 
@@ -13,16 +13,11 @@ export class GameService {
   private tokens : GameTokens;
   private tokenLocationArray : {
     [location:string/*Location*/] : TokenID[]
-  } = {  
-    // careful, 'location' key not validated by TS at present...
-    'conveyor' : [],
-    'token bank' : [],
-    'code' : []
-  };
+  } = {};
 
-  private onConveyorChanged : OnTokenArrayChanged;
-  private onTokenBankChanged : OnTokenArrayChanged;
-  private onCodeChanged : OnTokenArrayChanged;
+  private onTokenLocationChanged : {
+    [location:string/*Location*/] : OnTokenArrayChanged
+  } = {};
 
   constructor() {
     // Initially load of all game tokens to 
@@ -39,21 +34,19 @@ export class GameService {
     this.tokenLocationArray['conveyor'] = Object.keys(this.tokens);
   }
 
-  public bindConveyorChanged(callback: OnTokenArrayChanged) {
-    this.onConveyorChanged = callback;
+  public bindTokenLocationChanged(
+      tokenLocation: Location, callback: OnTokenArrayChanged) {
+    this.onTokenLocationChanged[tokenLocation] = callback;
     // Trigger view population on bind
-    this.commit(['conveyor']);
+    if (tokenLocation==='conveyor')
+      this.commit([tokenLocation]);
   }
 
   commit(locations : Location[]) {
     locations.forEach((location : Location) => {
-      switch (location) {
-        case 'conveyor':
-          this.onConveyorChanged(
-            this.tokenLocationArray[location].map(tokenID=>this.tokens[tokenID])
-          );
-          break;
-      }
+      this.onTokenLocationChanged[location](
+        this.tokenLocationArray[location].map(tokenID=>this.tokens[tokenID])
+      );
     });
   }
 

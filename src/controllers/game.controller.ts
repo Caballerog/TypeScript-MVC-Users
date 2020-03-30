@@ -1,4 +1,4 @@
-import { GameToken } from '../models/client.game.model';
+import { GameToken, locations } from '../models/client.game.model';
 import { GameService } from '../services/game.service';
 import { GameView } from '../views/game.view';
 
@@ -12,15 +12,11 @@ import { GameView } from '../views/game.view';
  */
 export class GameController {
   constructor(private gameService: GameService, private gameView: GameView) {
-    // Explicit this binding
-    this.gameService.bindTokenLocationChanged('conveyor',this.onConveyorChanged);
-    
-
-    // Display initial users
-    // this.onUserListChanged(this.userService.users);
+    locations.forEach((location)=>{
+      this.gameService.bindTokenLocationChanged(location,
+        (tokens: GameToken[]) => {
+          this.gameView.display(location,tokens);
+        });
+    })
   }
-
-  onConveyorChanged = (tokens: GameToken[]) => {
-    this.gameView.displayConveyor(tokens);
-  };
 }

@@ -1,9 +1,11 @@
-import { GameToken, GameTokens, Location } from '../models/client.game.model';
-
+import { GameToken, Location, locations } from '../models/client.game.model';
 
 export class GameView {
     private app: HTMLElement;
-    private ulConveyor : HTMLUListElement;
+
+    private ulTokens : {
+        [location:string/*Location*/] : HTMLUListElement
+    } = {};
 
     constructor() {
         this.app = document.getElementById('root');
@@ -16,7 +18,7 @@ export class GameView {
             </div>
             <div>
                 <h2>Token Bank</h2>
-                <ul id='token bank' />
+                <ul id='token_bank' />
             </div>
             <div>
                 <h2>Code</h2>
@@ -24,16 +26,22 @@ export class GameView {
             </div>
         `;
         this.app.innerHTML = html;
-        this.ulConveyor = document.getElementById('token bank') as HTMLUListElement;
+
+        locations.forEach((location)=>{
+            this.ulTokens[location] 
+                = document.getElementById(
+                    location.replace(' ','_') // spaces not valid in HTML IDs
+                ) as HTMLUListElement;
+        })
     }
 
-    public displayConveyor(tokens : GameToken[]) {
+    public display(location : Location, tokens : GameToken[]) {
         // clear any prior tokens
-        this.ulConveyor.innerText = '';
+        this.ulTokens['conveyor'].innerText = '';
         tokens.forEach((token) => {
             const li = document.createElement('li') as HTMLLIElement;
             li.innerText = token.token;
-            this.ulConveyor.appendChild(li);
+            this.ulTokens['conveyor'].appendChild(li);
         });
     }
 }

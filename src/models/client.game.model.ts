@@ -2,6 +2,8 @@ import { ExerciseToken /*, TokenID*/ } from './exercise.model';
 
 export type Location = 'conveyor' | 'token bank' | 'code';
 
+export const locations : Location[] = [ 'conveyor', 'token bank', 'code' ];
+
 // One repository for tokens (with three location states)
 // may help avoid invalid duplication or ommission of tokens
 // within the three possible locations by allowing us to

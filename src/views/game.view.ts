@@ -1,4 +1,6 @@
 import { GameToken, Location, locations } from '../models/client.game.model';
+import { HandleMoveToken } from '../services/game.service';
+
 
 export class GameView {
     private app: HTMLElement;
@@ -35,13 +37,23 @@ export class GameView {
         })
     }
 
+    public bindMoveToken(handler: HandleMoveToken) {
+        locations.forEach((location) => {
+            this.ulTokens[location].addEventListener('click', 
+            event => {
+                handler((event.target as HTMLUListElement).id,1);
+            });
+        });
+    }
+    
     public display(location : Location, tokens : GameToken[]) {
         // clear any prior tokens
-        this.ulTokens['conveyor'].innerText = '';
+        this.ulTokens[location].innerText = '';
         tokens.forEach((token) => {
             const li = document.createElement('li') as HTMLLIElement;
-            li.innerText = token.token;
-            this.ulTokens['conveyor'].appendChild(li);
+            li.id = token.id;
+            li.innerText = token.token + ' (id='+token.id+')';
+            this.ulTokens[location].appendChild(li);
         });
     }
 }

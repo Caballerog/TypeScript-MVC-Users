@@ -1,7 +1,7 @@
 import { ExerciseToken /*, TokenID*/ } from './exercise.model';
 
+// TODO: Check out TypeScript enum as it may cover both of the following...
 export type Location = 'conveyor' | 'token bank' | 'code';
-
 export const locations : Location[] = [ 'conveyor', 'token bank', 'code' ];
 
 // One repository for tokens (with three location states)

@@ -13,18 +13,20 @@ export class GameView {
         this.app = document.getElementById('root');
 
         const html = `
-            <h1>Game Page</h1>
-            <div>
-                <h2>Conveyor</h2>
-                <ul id='conveyor' />
-            </div>
-            <div>
-                <h2>Token Bank</h2>
-                <ul id='token_bank' />
-            </div>
-            <div>
-                <h2>Code</h2>
-                <ul id='code' />
+            <div class='game-page'>
+                <h1>Game Page</h1>
+                <div class='token-container'>
+                    <h2>Conveyor</h2>
+                    <ul id='conveyor' />
+                </div>
+                <div class='code-editor'>
+                    <h2>Code</h2>
+                    <ul id='code' />
+                </div>
+                <div class='token-container'>
+                    <h2>Token Bank</h2>
+                    <ul id='token_bank' />
+                </div> 
             </div>
         `;
         this.app.innerHTML = html;

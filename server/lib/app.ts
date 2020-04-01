@@ -2,14 +2,16 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import { Routes } from "./routes/crmRoutes";
 import * as mongoose from "mongoose";
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 class App {
 
     public app: express.Application = express();
     public routePrv: Routes = new Routes();
-    // public mongoUrl: string = 'mongodb://localhost/CRMdb';  
-    // public mongoUrl: string = 'mongodb://dalenguyen:123123@localhost:27017/CRMdb';
-    public mongoUrl: string = 'mongodb://localhost:27017/test';
+    // public mongoUrl: string = 'mongodb://localhost:27017/test';
+    public mongoUrl = process.env.mongodb_url;
 
     constructor() {
         this.config();

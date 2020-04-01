@@ -102,9 +102,26 @@ div.game-page {
   background-color: green; 
 }
 
+/*CONVEYOR BELT*/
+
+
+/*CODE EDITOR*/
+
+
+/*TOKEN BANK*/
+
+div.token-container {
+  width: 90%; 
+  border: 4px solid grey; 
+  overflow: scroll;
+  margin: 20px;
+}
+
 div.token-container ul {
   display: flex;
+
 }
 div.token-container li {
   margin: 10px;
+  background-color:yellow;
 }

@@ -15,21 +15,21 @@ export class GameView {
         const html = `
             <div class='game-page'>
                 <h1>Game Page</h1>
+                <h2>Conveyor</h2>
                 <div class='token-container'>
-                    <h2>Conveyor</h2>
                     <ul id='conveyor' />
                 </div>
+                <h2>Code!</h2>
                 <div class='code-editor'>
-                    <h2>Code</h2>
                     <ul id='code' />
                 </div>
+                <h2>Token Bank</h2>
                 <div class='token-container'>
-                    <h2>Token Bank</h2>
                     <ul id='token_bank' />
                 </div> 
             </div>
         `;
-        this.app.innerHTML = html;
+        this.app.innerHTML = html; 
 
         locations.forEach((location)=>{
             this.ulTokens[location] 

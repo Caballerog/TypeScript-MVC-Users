@@ -35,7 +35,7 @@ export class GameService {
         result[exerciseToken.id] 
           = { ...exerciseToken, 
               location: //'conveyor'
-              locations[index%3] // test: distribute using modulus 
+              locations[ ((index%4)?0:2) / (index%8?2:1) ] // test: distribute using modulus 
             }
         return result;
       }, {} as GameTokens);

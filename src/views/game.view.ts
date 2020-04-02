@@ -14,19 +14,45 @@ export class GameView {
 
         const html = `
             <div class='game-page'>
-                <h1>Game Page</h1>
-                <h2>Conveyor</h2>
-                <div class='token-container'>
+                <div class='flex5'>
+                    <div id='prompt'>git PROMPT: Write a program to print out 10 numbers</div>
+                    <div id='language'>Javascript</div>                    
+                    <div id='budget'>CREDIT &nbsp;<b>$5.12</b></div>
+                    <div id='timer'>TIMER &nbsp;<b>3:07</b></div>
+                </div>
+                <div class='conveyor-container'>
                     <ul id='conveyor' />
                 </div>
-                <h2>Code!</h2>
-                <div class='code-editor'>
-                    <ul id='code' />
+                <div class='flex2'>
+                    <div class='flex3'>
+                        <div class='code-editor'>
+                            <ul id='code' />
+                        </div>
+                        <div id='label'>Token Bank</div>
+                        <div class='token-container'>
+                            <ul id='token_bank' />
+                        </div> 
+                    </div>
+                    <div class='flex4'>
+                        <div class='opponentStats'>
+                        </div>
+                        <div class='opponentCode'>
+                        </div>
+                        <div class='submitButton'><div class='submit'>SUBMIT</div>
+                        </div>
+                        <div class='flex6'>
+                            <div class='flex7'>
+                                <div id='label'>Return Token</div>
+                                <div class='sellBack'>
+                                </div>
+                            </div>
+                            <div class='flex8'>
+                                <div class='budget'>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <h2>Token Bank</h2>
-                <div class='token-container'>
-                    <ul id='token_bank' />
-                </div> 
             </div>
         `;
         this.app.innerHTML = html; 
@@ -54,7 +80,8 @@ export class GameView {
         tokens.forEach((token) => {
             const li = document.createElement('li') as HTMLLIElement;
             li.id = token.id;
-            li.innerText = token.token + ' (id='+token.id+')';
+            li.innerText = token.token 
+            li.type = token.type
             this.ulTokens[location].appendChild(li);
         });
     }

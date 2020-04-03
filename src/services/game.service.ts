@@ -92,20 +92,21 @@ export class GameService {
   public moveToken(tokenID : TokenID, direction : Direction)
   {
     const oldLocation = this.tokens[tokenID].location;
-    const newPos = locations.indexOf(oldLocation) + direction;
+    let newPos = locations.indexOf(oldLocation) + direction;
 
     // Check boundaries
     if (newPos < 0 || newPos >= locations.length)
-      alert('Assertion FAILED that tokens not be moved beyond location positions'
-      +` 0, 1, and 2; tried to move token ID ${tokenID} to position #${newPos}`);
-    else {
+//      alert('Assertion FAILED that tokens not be moved beyond location positions'
+//      +` 0, 1, and 2; tried to move token ID ${tokenID} to position #${newPos}`);
+      newPos = locations.indexOf(oldLocation) - direction; // help w/ testing...
+//    else { ...
       // Boundary checks out OK, proceed to move
       const newLocation = locations[newPos];
       // alert(`tokenID=${tokenID}, direction=${direction}, from=${oldLocation} to ${newLocation}`);
       this.tokens[tokenID].location = newLocation;
       this.refreshLocationArrays();
       this.commit([oldLocation,newLocation]);
-    }
+//    } ...
     return;
   }
 

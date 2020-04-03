@@ -9,15 +9,17 @@ export class GameView {
         [location:string/*Location*/] : HTMLUListElement
     } = {};
 
+
     constructor() {
         this.app = document.getElementById('root');
+
+        
 
         const html = `
             <div class='game-page'>
                 <div class='flex5'>
-                    <div id='prompt'>git PROMPT: Write a program to print out 10 numbers</div>
+                    <div id='prompt'>PROMPT: Write a program to print out 10 numbers</div>
                     <div id='language'>Javascript</div>                    
-                    <div id='budget'>CREDIT &nbsp;<b>$5.12</b></div>
                     <div id='timer'>TIMER &nbsp;<b>3:07</b></div>
                 </div>
                 <div class='conveyor-container'>
@@ -34,11 +36,17 @@ export class GameView {
                         </div> 
                     </div>
                     <div class='flex4'>
-                        <div class='opponentStats'>
+                        <div class="stats-container">
+                            <div class='flex9'>
+                            <div id='stats'><b>MY STATS</b><br><BR>CREDIT: $5.12<br>TOKENS PLACED: 9<BR>LINES OF CODE: 2<BR>AVG COST PER LINE: $0.80<br>SUBMIT ATTEMPTS: 0</div>
+                            </div>
+                            <div class='flex9'>
+                            <div id='stats'><b>OPPONENT STATS</b><br><BR>CREDIT: $4.78<br>TOKENS PLACED: 12<BR>LINES OF CODE: 3<BR>AVG COST PER LINE: $0.72<br>SUBMIT ATTEMPTS: 1</div>
+                            </div>
                         </div>
                         <div class='opponentCode'>
                         </div>
-                        <div class='submitButton'><div class='submit'>SUBMIT</div>
+                        <div class='submitButton'><div class='submit'>SUBMIT CODE</div>
                         </div>
                         <div class='flex6'>
                             <div class='flex7'>
@@ -47,7 +55,8 @@ export class GameView {
                                 </div>
                             </div>
                             <div class='flex8'>
-                                <div class='budget'>
+                                <div id='label2'>Budget</div>                            
+                                <div class='credit'><br><br>CREDIT<br>$ 5.12
                                 </div>
                             </div>
                         </div>
@@ -63,6 +72,7 @@ export class GameView {
                     location.replace(' ','_') // spaces not valid in HTML IDs
                 ) as HTMLUListElement;
         })
+
     }
 
     public bindMoveToken(handler: HandleMoveToken) {
@@ -77,12 +87,24 @@ export class GameView {
     public display(location : Location, tokens : GameToken[]) {
         // clear any prior tokens
         this.ulTokens[location].innerText = '';
+        let indentationLevel = 0;
         tokens.forEach((token) => {
             const li = document.createElement('li') as HTMLLIElement;
             li.id = token.id;
-            li.innerText = token.token 
-            li.type = token.type
+            li.innerHTML = token.token;
+            li.classList.add(token.type);
+            switch (token.token) {
+                case '{':
+                    indentationLevel++;
+                    li.classList.add('open-curly-bracket');
+                    break;
+                case '}':
+                    indentationLevel--;
+                    li.classList.add('close-curly-bracket');
+                    break;
+            } 
+            li.classList.add('indent-'+indentationLevel.toString());
             this.ulTokens[location].appendChild(li);
-        });
+        });   
     }
 }

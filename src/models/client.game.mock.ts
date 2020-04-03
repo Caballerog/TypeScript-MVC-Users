@@ -120,5 +120,17 @@ export const sampleGameTokens : ExerciseToken[] = [
         token: ';',
         type: 'symbol',
         cost: 0.05
+    },
+    {
+        id: '022',
+        token: '{',
+        type: 'symbol',
+        cost: 0.05
+    },
+    {
+        id: '023',
+        token: '}',
+        type: 'symbol',
+        cost: 0.05
     }
 ]

@@ -101,7 +101,7 @@ li span:focus {
 div.game-page {
   height: 100vh;
   width: 100vw;
-  background-color: #003d3e; 
+  background-color: green; /*003d3e*/
   /*TURQUOISE COLORS: https://www.color-hex.com/color/00ced1*/
   display:flex;
   flex-direction:column;
@@ -117,7 +117,7 @@ div.flex5{
   margin-top:10px;
   margin-left:10px;
   margin-right:10px;
-  color:#e5fafa;
+  color:#D2ECD2;
   font-weight: bold;
   letter-spacing: 0px;
   text-shadow: 1px 1px black;
@@ -135,14 +135,14 @@ div.flex5{
   text-align:right;
   font-size:13px;
   background: 100%;
-  background-color: #e5fafa;
+  background-color: #D2ECD2;
   padding-left:5px;
   padding-right:5px;
   border-radius: 4px;
-  box-shadow: 1.5px 1.5px #00b9bc;
-  font-weight: bold;
+  box-shadow: 1.5px 1.5px #51CA51;
+  font-weight: normal;
   font-family: Georgia, 'Times New Roman', Times, serif;
-  font-style: italic;
+  font-style: regular;
 }
 
 #budget{
@@ -155,11 +155,11 @@ div.flex5{
   text-align:right;
   font-size:14px;
   background: 100%;
-  background-color: #e5fafa;
+  background-color: #D2ECD2;
   padding-left:5px;
   padding-right:5px;
   border-radius: 4px;
-  box-shadow: 1.5px 1.5px #00b9bc;
+  box-shadow: 1.5px 1.5px #51CA51;
 }
 
 #timer{
@@ -172,18 +172,18 @@ div.flex5{
   text-align:right;
   font-size:14px;
   background: 100%;
-  background-color: #e5fafa;
+  background-color: #D2ECD2;
   padding-left:5px;
   padding-right:5px;
   border-radius: 4px;
-  box-shadow: 1.5px 1.5px #00b9bc;  
+  box-shadow: 1.5px 1.5px #51CA51;  
 }
 
 /*CONVEYOR BELT*/
 div.conveyor-container {
   height:85px;
   border-bottom: 2px solid black; 
-  overflow: scroll;
+  overflow-x: scroll;
   margin-left:10px;
   margin-right:10px;
 }
@@ -198,13 +198,13 @@ div.conveyor-container li {
   margin-left: 10px;
   margin-right: 10px;
   background-color:gold;
-  background-image: linear-gradient(khaki, #996515);
-  box-shadow: 1px 1px #D4AF37;  
+  background-image: linear-gradient(yellow, #f5c71a);
+  box-shadow: 1px 1px #996515;  
   
 }
 div.conveyor-container li:hover{
-  background-image: linear-gradient(#E6BE8A, #8B4513);
-  box-shadow: 1px 1px #CD853F;    
+  background-image: linear-gradient(#dbd400, #858000);
+  box-shadow: 1px 1px #bdb600;    
 }
 
 /*FLEX2*/
@@ -218,8 +218,7 @@ div.flex2{
 
 /*FLEX3*/
 div.flex3{
-  flex-grow:6;
-
+  width:65%;
   /*parent flex*/
   display:flex;
   flex-direction:column;
@@ -265,11 +264,11 @@ div.code-editor li{
 div.token-container {
   height:175px;
   border: 1px solid black; 
-  overflow: scroll;
+  overflow-y: scroll;
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 10px;
-  background-color: #e5fafa;
+  background-color: #D2ECD2;
 }
 
 div.token-container ul {
@@ -278,31 +277,45 @@ div.token-container ul {
 div.token-container li {
   margin: 5px;
   background-color:gold;
-  background-image: linear-gradient(khaki, #D4AF37);
+  background-image: linear-gradient(yellow, #f5c71a);
   box-shadow: 1px 1px #996515;
 }
 
 /*FLEX4*/
 div.flex4{
-  flex-grow:3;
-
+  width:35%;
   /*parent flex*/
   display: flex;
   flex-direction:column;
 }
 /*OPPONENT STATS*/
-div.opponentStats{
-  flex-grow: 1;
-  background-color:#005253;
+div.stats-container{
+  height:30%;
   margin-top:15px;  
   margin-left:0px;
   margin-right:10px;
   color:white;
+
+  display:flex;
+}
+
+div.flex9{
+  width:50%;
+  background-color:darkgreen;
+}
+
+#stats{
+  margin:10px;
+  letter-spacing: 1px;
+  font-size: 10px;
+  line-height: 16px;
+  background-color:darkgreen;
+  
 }
 
 /*OPPONENT CODE*/
 div.opponentCode{
-  flex-grow:3;
+  height:70%;
   background-color:black;
   margin-left:0px;
   margin-right:10px;
@@ -324,32 +337,32 @@ div.submit{
   text-align: center;
 
   text-decoration: none;
-  color: #fff;
+  color: yellow;
   font-weight: bold;
-  letter-spacing: 0px;
-  background-color: #538fbe;
+  letter-spacing: 1px;
+  background-color: #BE5353;
   font-size: 20px;
-  border: 1px solid #2d6898;
-  background-image: linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
-  background-image: -o-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
-  background-image: -moz-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
-  background-image: -webkit-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
-  background-image: -ms-linear-gradient(bottom, rgb(73,132,180) 0%, rgb(97,155,203) 100%);
+  border: 1px solid #982D2D;
+  background-image: linear-gradient(bottom, rgb(180,73,73) 0%, rgb(203,97,97) 100%);
+  background-image: -o-linear-gradient(bottom, rgb(180,73,73) 0%, rgb(203,97,97) 100%);
+  background-image: -moz-linear-gradient(bottom, rgb(7180,73,73) 0%, rgb(203,97,97) 100%);
+  background-image: -webkit-linear-gradient(bottom, rgb(180,73,73) 0%, rgb(203,97,97) 100%);
+  background-image: -ms-linear-gradient(bottom, rgb(180,73,73) 0%, rgb(203,97,97) 100%);
 
   background-image: -webkit-gradient(
       linear,
       left bottom,
       left top,
-      color-stop(0, rgb(73,132,180)),
-      color-stop(1, rgb(97,155,203))
+      color-stop(0, rgb(7180,73,73)),
+      color-stop(1, rgb(203,97,97))
   );
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
   text-shadow: 0px -1px 0px rgba(0,0,0,.5);
-  -webkit-box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
-  -moz-box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
-  box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+  -webkit-box-shadow: 0px 6px 0px #8F2B2B, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+  -moz-box-shadow: 0px 6px 0px #8F2B2B, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+  box-shadow: 0px 6px 0px #8F2B2B, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
 
   -webkit-transition: all .1s ease-in-out;
   -moz-transition: all .2s ease-in-out;
@@ -357,18 +370,18 @@ div.submit{
 }
 
 div.submit:hover {
-  background-image: linear-gradient(bottom, rgb(79,142,191) 0%, rgb(102,166,214) 100%);
-  background-image: -o-linear-gradient(bottom, rgb(79,142,191) 0%, rgb(102,166,214) 100%);
-  background-image: -moz-linear-gradient(bottom, rgb(79,142,191) 0%, rgb(102,166,214) 100%);
-  background-image: -webkit-linear-gradient(bottom, rgb(79,142,191) 0%, rgb(102,166,214) 100%);
-  background-image: -ms-linear-gradient(bottom, rgb(79,142,191) 0%, rgb(102,166,214) 100%);
+  background-image: linear-gradient(bottom, rgb(191,79,79) 0%, rgb(214,102,102) 100%);
+  background-image: -o-linear-gradient(bottom, rgb(191,79,79) 0%, rgb(214,102,102) 100%);
+  background-image: -moz-linear-gradient(bottom, rgb(191,79,79) 0%, rgb(214,102,102) 100%);
+  background-image: -webkit-linear-gradient(bottom, rgb(191,79,79) 0%, rgb(214,102,102) 100%);
+  background-image: -ms-linear-gradient(bottom, rgb(191,79,79) 0%, rgb(214,102,102) 100%);
 
   background-image: -webkit-gradient(
       linear,
       left bottom,
       left top,
-      color-stop(0, rgb(79,142,191)),
-      color-stop(1, rgb(102,166,214))
+      color-stop(0, rgb(191,79,79)),
+      color-stop(1, rgb(214,102,102))
       
   );
   -webkit-border-radius: 5px;
@@ -376,36 +389,36 @@ div.submit:hover {
   border-radius: 5px;
 
   text-shadow: 0px  -1px 0px rgba(0,0,0,.5);
-  -webkit-box-shadow: 0px 6px 0px #2b638f;
-  -moz-box-shadow: 0px 6px 0px #2b638f;
-  box-shadow: 0px 6px 0px #2b638f;
-  -webkit-box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4);
-  -moz-box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4);
-  box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4);
+  -webkit-box-shadow: 0px 6px 0px #8F2B2B;
+  -moz-box-shadow: 0px 6px 0px #8F2B2B;
+  box-shadow: 0px 6px 0px #8F2B2B;
+  -webkit-box-shadow: 0px 6px 0px #8F2B2B, 0px 3px 15px rgba(0,0,0,.4);
+  -moz-box-shadow: 0px 6px 0px #8F2B2B, 0px 3px 15px rgba(0,0,0,.4);
+  box-shadow: 0px 6px 0px #8F2B2B, 0px 3px 15px rgba(0,0,0,.4);
 
   box-shadow: inset 0px 1px 0px rgba(255,255,255,.3);
-  -webkit-box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
-  -moz-box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
-  box-shadow: 0px 6px 0px #2b638f, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);  
+  -webkit-box-shadow: 0px 6px 0px #8F2B2B, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+  -moz-box-shadow: 0px 6px 0px #8F2B2B, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+  box-shadow: 0px 6px 0px #8F2B2B, 0px 3px 15px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);  
 }
 
 div.submit:active {
-  background-image: linear-gradient(bottom, rgb(88,154,204) 0%, rgb(90,150,199) 100%);
-  background-image: -o-linear-gradient(bottom, rgb(88,154,204) 0%, rgb(90,150,199) 100%);
-  background-image: -moz-linear-gradient(bottom, rgb(88,154,204) 0%, rgb(90,150,199) 100%);
-  background-image: -webkit-linear-gradient(bottom, rgb(88,154,204) 0%, rgb(90,150,199) 100%);
-  background-image: -ms-linear-gradient(bottom, rgb(88,154,204) 0%, rgb(90,150,199) 100%);
+  background-image: linear-gradient(bottom, rgb(204,88,88) 0%, rgb(199,90,90) 100%);
+  background-image: -o-linear-gradient(bottom, rgb(204,88,88) 0%, rgb(199,90,90) 100%);
+  background-image: -moz-linear-gradient(bottom, rgb(204,88,88) 0%, rgb(199,90,90) 100%);
+  background-image: -webkit-linear-gradient(bottom, rgb(204,88,88) 0%, rgb(199,90,90) 100%);
+  background-image: -ms-linear-gradient(bottom, rgb(204,88,88) 0%, rgb(9199,90,90) 100%);
 
   background-image: -webkit-gradient(
       linear,
       left bottom,
       left top,
-      color-stop(0, rgb(88,154,204)),
-      color-stop(1, rgb(90,150,199))
+      color-stop(0, rgb(204,88,88)),
+      color-stop(1, rgb(199,90,90))
   );
-  -webkit-box-shadow: 0px 2px 0px #2b638f, 0px 1px 6px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
-  -moz-box-shadow: 0px 2px 0px #2b638f, 0px 1px 6px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
-  box-shadow: 0px 2px 0px #2b638f, 0px 1px 6px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+  -webkit-box-shadow: 0px 2px 0px #8F2B2B, 0px 1px 6px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+  -moz-box-shadow: 0px 2px 0px #8F2B2B, 0px 1px 6px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
+  box-shadow: 0px 2px 0px #8F2B2B, 0px 1px 6px rgba(0,0,0,.4), inset 0px 1px 0px rgba(255,255,255,.3), inset 0px 0px 3px rgba(255,255,255,.5);
 
   -webkit-transform: translate(0, 4px);
   -moz-transform: translate(0, 4px);
@@ -422,33 +435,49 @@ div.flex6{
 }
 
 div.flex7{
-  flex-grow:1;
+  width:50%;
 }
 /*SELL BACK*/
 div.sellBack{
   height: 175px;
-  background-color:#e5fafa;
+  background-color:#D2ECD2;
   border: 1px solid black; 
   margin-left:0px;
   margin-right:10px;
   margin-bottom:10px;
 }
 
-/*
+
 div.flex8{
-  flex-grow:0;
+  width:50%;
 }
-div.budget{
+
+#label2{
+  margin-top:10px;
+  margin-left:10px;
+  margin-right:10px;
+  color:transparent;
+  padding-top:2px;
+  padding-bottom:2px;
+  font-size:13px;
+  font-style: italic;
+  text-align: center;
+}
+
+
+div.credit{
   height: 175px;
   background-color:transparent;
-  border: 1px solid black; 
   margin-left:0px;
   margin-right:10px;
   margin-bottom:10px;
-  text-align: right;
-  vertical-align: bottom;
+  text-align: center;
+  font-size: 25px;
+  color:#D2ECD2;
+  font-weight: bold;
+  text-shadow: 1px 1px black;
 }
-*/
+
 
 
 

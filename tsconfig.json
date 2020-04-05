@@ -3,7 +3,7 @@
     "outDir": "./dist/",
     "noImplicitAny": false,
     "module": "commonjs",
-    "target": "  ",
+    "target": "es2015",
     "allowJs": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,

@@ -7,17 +7,13 @@
 html {
   font-family: sans-serif;
   font-size: 1rem;
-  color: black;
+  color: #444;
 }
+
 
 body {
   margin: 0px;
 }
-
-#root {
-  padding: 0px;
-}
-
 
 [type="text"],
 [type="password"],
@@ -28,7 +24,6 @@ button {
   font-size: 1rem;
   border: 2px solid #ccc;
   border-radius: 4px;
-  
 }
 
 button {
@@ -37,12 +32,13 @@ button {
   color: white;
   border: 2px solid #007bff;
   margin: 0 .5rem;
-  
 }
 
 input {
   width: 200px;
 }
+
+
 
 [type="text"]:active,
 [type="text"]:focus,
@@ -479,6 +475,43 @@ div.credit{
 }
 
 
+form#loginForm  {
+  display: block;
+  padding: 10px;
+  text-align: center;
+
+  position: fixed; 
+  
+  width: 100%;
+  top: -20px;
+  left: -20px;
+  right: -40px;
+  bottom: -40px;
+  width: auto;
+  height: auto;  
+}
+
+body{
+
+  background-color:#008000 ;
+}
 
 
+.box{
+  position: relative;
+  width: 500px;
+  height: 500px;
+  margin: 0 0 20px;
+  padding: 50px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* centering */
+div.loginCenter
+{
+  max-width: 450px;
+  margin: 2rem auto;
+  padding: 1em;
+}
 

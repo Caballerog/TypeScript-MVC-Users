@@ -9,25 +9,36 @@ export class HomeView {
     private title: HTMLElement;
 
     constructor() {
-        this.app = document.querySelector('#root');
+        this.app = document.getElementById('root');
 
-        this.challengeButton = 
-            Object.assign(document.createElement('button'), 
-                { textContent: 'Challenge' });
-        this.singlePlayButton = 
-            Object.assign(document.createElement('button'), 
-                { textContent: 'Single Play' });
+        const html = `
+        <div class='formCenter'>
+            <form id='homePage' method='post'>
+                <div class = 'box'>
+                    <img src="http://icon-library.com/images/blitz-icon/blitz-icon-18.jpg" alt="Blitz Icon" width="128" height="128">
+                    <h1>Clode Blitz</h1>
+                    <div>
+                        <button id='challenge' type='submit'>Challenge</button>
+                        <button id='singlePlay' type='submit'>Single Play</button>
+                    </div> 
+                </div>
+            </form>
+        </div>
+        `;
+        this.app.innerHTML = html;
 
-        this.title = document.createElement('h1');
-        this.title.textContent = 'Code Blitz';
-        this.app.append(this.title, this.challengeButton, this.singlePlayButton);    
-
-        this.challengeButton.addEventListener('click', event => {
-            const { origin, pathname } = location;
-            location.replace(origin+pathname+'?page=challenge');
+        document.getElementById('homePage')
+            .addEventListener('submit', event => {
+                //event.preventDefault(); -- actually post is handy, no need for ajax call
+                const { origin, pathname } = location;
+                setTimeout(()=>{ 
+                    // timeout is temporary hack pending server auth implementation
+                    location.replace(origin+pathname+'?page=challenge');
+                })
         });
 
-        this.singlePlayButton.addEventListener('click', event => {
+        document.getElementById('singlePlay')
+        .addEventListener('click', event => {
             alert('not yet implemented')
         });
         

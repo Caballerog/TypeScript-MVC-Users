@@ -4,7 +4,7 @@
  * Manages the data of the application.
  */
 
-import { uuidv4 } from '../utils/util';
+import { uuidv4 } from '../utils/util'; 
 
 export class Challenge {
   public id: string;

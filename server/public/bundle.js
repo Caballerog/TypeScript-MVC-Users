@@ -333,12 +333,18 @@ class ChallengeView {
         this.createInput({
             key: 'inputWinLossRecord',
             type: 'text',
-            placeholder: 'Win/Loss',
+            placeholder: 'Win / Loss',
             name: 'winLossRecord'
         });
         this.submitButton = this.createElement('button');
         this.submitButton.textContent = 'Submit';
-        this.form.append(this.inputName, this.inputWinLossRecord, this.submitButton);
+        this.gameOnButton = this.createElement('button');
+        this.gameOnButton.textContent = 'Game On!';
+        this.form.append(this.inputName, this.inputWinLossRecord, this.submitButton, this.gameOnButton);
+        this.gameOnButton.addEventListener('click', event => {
+            const { origin, pathname } = location;
+            location.replace(origin + pathname + '?page=game');
+        });
         this.title = this.createElement('h1');
         this.title.textContent = 'Challenge';
         this.userList = this.createElement('ul', 'user-list');
@@ -501,8 +507,18 @@ class GameView {
                         </div>
                         <div class='opponentCode'>
                         </div>
-                        <div class='submitButton'><div class='submit'>SUBMIT CODE</div>
+
+                        
+                        
+                        <button id="myBtn"><div class='submitButton'><div class='submit'>SUBMIT CODE</div>
+                        </div></button>
+                        <div id="myModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <p>YOU WIN!</p>
+                            </div>
                         </div>
+
                         <div class='flex6'>
                             <div class='flex7'>
                                 <div id='label'>Return Token</div>
@@ -518,8 +534,31 @@ class GameView {
                     </div>
                 </div>
             </div>
+
+            
         `;
         this.app.innerHTML = html;
+        //POP UP CODE START:
+        var modal = document.getElementById("myModal");
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        // When the user clicks the button, open the modal 
+        btn.onclick = function () {
+            modal.style.display = "block";
+        };
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        };
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+        //END POP UP CODE.
         client_game_model_1.locations.forEach((location) => {
             this.ulTokens[location]
                 = document.getElementById(location.replace(' ', '_') // spaces not valid in HTML IDs
@@ -564,19 +603,33 @@ exports.GameView = GameView;
 Object.defineProperty(exports, "__esModule", { value: true });
 class HomeView {
     constructor() {
-        this.app = document.querySelector('#root');
-        this.challengeButton =
-            Object.assign(document.createElement('button'), { textContent: 'Challenge' });
-        this.singlePlayButton =
-            Object.assign(document.createElement('button'), { textContent: 'Single Play' });
-        this.title = document.createElement('h1');
-        this.title.textContent = 'Code Blitz';
-        this.app.append(this.title, this.challengeButton, this.singlePlayButton);
-        this.challengeButton.addEventListener('click', event => {
+        this.app = document.getElementById('root');
+        const html = `
+        <div class='formCenter'>
+            <form id='homePage' method='post'>
+                <div class = 'box'>
+                    <img src="http://icon-library.com/images/blitz-icon/blitz-icon-18.jpg" alt="Blitz Icon" width="128" height="128">
+                    <h1>Clode Blitz</h1>
+                    <div>
+                        <button id='challenge' type='submit'>Challenge</button>
+                        <button id='singlePlay' type='submit'>Single Play</button>
+                    </div> 
+                </div>
+            </form>
+        </div>
+        `;
+        this.app.innerHTML = html;
+        document.getElementById('homePage')
+            .addEventListener('submit', event => {
+            //event.preventDefault(); -- actually post is handy, no need for ajax call
             const { origin, pathname } = location;
-            location.replace(origin + pathname + '?page=challenge');
+            setTimeout(() => {
+                // timeout is temporary hack pending server auth implementation
+                location.replace(origin + pathname + '?page=challenge');
+            });
         });
-        this.singlePlayButton.addEventListener('click', event => {
+        document.getElementById('singlePlay')
+            .addEventListener('click', event => {
             alert('not yet implemented');
         });
         //    this._temporaryAgeText = '';
@@ -592,7 +645,7 @@ class LoginView {
     constructor() {
         this.app = document.getElementById('root');
         const html = `
-        <div class='loginCenter'>
+        <div class='formCenter'>
             <form id='loginForm' method='post'>
                 <div class = 'box'>
                     <img src="http://icon-library.com/images/blitz-icon/blitz-icon-18.jpg" alt="Blitz Icon" width="128" height="128">
@@ -623,10 +676,10 @@ class LoginView {
             const { origin, pathname } = location;
             setTimeout(() => {
                 // timeout is temporary hack pending server auth implementation
-                location.replace(origin + pathname + '?page=home');
+                location.replace(origin + pathname + '?page=signup');
             });
         });
-        //    this._temporaryAgeText = '';
+        //    this._t emporaryAgeText = '';
         //    this._initLocalListeners();
     }
 }
@@ -639,25 +692,28 @@ class SignupView {
     constructor() {
         this.app = document.getElementById('root');
         const html = `
-            <div class = 'box'>
-                <img src="http://icon-library.com/images/blitz-icon/blitz-icon-18.jpg" alt="Blitz Icon" width="128" height="128">
+            <div class='formCenter'>
                 <form id='Signup' method='post'>
-                     <h1>Clode Blitz Signup</h1>
-                <div>
-                    <img src="https://cdn2.iconfinder.com/data/icons/font-awesome/1792/user-512.png" alt="user Icon" width="20" height="20">
-                    <input name='name' type='text' placeholder='Name' />            
+                    <div class = 'box'>
+                        <img src="http://icon-library.com/images/blitz-icon/blitz-icon-18.jpg" alt="Blitz Icon" width="128" height="128">
+                        <h1>Clode Blitz Signup</h1>
+                        <div>
+                            <img src="https://cdn2.iconfinder.com/data/icons/font-awesome/1792/user-512.png" alt="user Icon" width="20" height="20">
+                            <input name='name' type='text' placeholder='Name' />            
+                        </div>
+                        <div>
+                            <img src="http://icons.iconarchive.com/icons/custom-icon-design/mono-general-2/512/mail-icon.png" alt="Mail Icon" width="20" height="20">
+                            <input name='email' type='text' placeholder='Email' />
+                        </div>
+                        <div>
+                            <img src="https://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/lock-24-512.png" alt="Lock Icon" width="20" height="20">
+                            <input name='password' type='password' placeholder='Password' />
+                        </div>
+                        <div>
+                            <button type='submit'>Let's Code!</button>
+                        </div>
                     </div>
-                <div>
-                     <img src="http://icons.iconarchive.com/icons/custom-icon-design/mono-general-2/512/mail-icon.png" alt="Mail Icon" width="20" height="20">
-                    <input name='email' type='text' placeholder='Email' />
-                 </div>
-                <div>
-                    <img src="https://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/lock-24-512.png" alt="Lock Icon" width="20" height="20">
-                    <input name='password' type='password' placeholder='Password' />
-                </div>
-                <div>
-                    <button type='submit'>Let's Code!</button>
-                </div>
+                </form>
             </div>
         `;
         this.app.innerHTML = html;

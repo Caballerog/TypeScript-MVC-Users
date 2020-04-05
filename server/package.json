@@ -4,11 +4,13 @@
   "description": "An API built with NodeJS, Express, MongoDB and TypeScript",
   "main": "dist/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
-    "dev": "ts-node ./lib/server.ts",
+    "dev": "tsc -w",
     "start": "nodemon ./dist/server.js",
-    "prod": "npm run build && npm run start"
+    "buildOld": "tsc",
+    "devOld": "ts-node ./lib/server.ts",
+    "startOld": "nodemon ./dist/server.js",
+    "prodOld": "npm run dev && npm run start",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "Dale",

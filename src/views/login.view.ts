@@ -9,7 +9,7 @@ export class LoginView {
         this.app = document.getElementById('root');
 
         const html = `
-        <div class='loginCenter'>
+        <div class='formCenter'>
             <form id='loginForm' method='post'>
                 <div class = 'box'>
                     <img src="http://icon-library.com/images/blitz-icon/blitz-icon-18.jpg" alt="Blitz Icon" width="128" height="128">
@@ -41,11 +41,11 @@ export class LoginView {
                 const { origin, pathname } = location;
                 setTimeout(()=>{ 
                     // timeout is temporary hack pending server auth implementation
-                    location.replace(origin+pathname+'?page=home');
+                    location.replace(origin+pathname+'?page=signup');
                 })
         });
 
-    //    this._temporaryAgeText = '';
+    //    this._t emporaryAgeText = '';
     //    this._initLocalListeners();
     }
 }

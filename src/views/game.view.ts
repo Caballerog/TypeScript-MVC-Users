@@ -46,8 +46,18 @@ export class GameView {
                         </div>
                         <div class='opponentCode'>
                         </div>
-                        <div class='submitButton'><div class='submit'>SUBMIT CODE</div>
+
+                        
+                        
+                        <button id="myBtn"><div class='submitButton'><div class='submit'>SUBMIT CODE</div>
+                        </div></button>
+                        <div id="myModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <p>YOU WIN!</p>
+                            </div>
                         </div>
+
                         <div class='flex6'>
                             <div class='flex7'>
                                 <div id='label'>Return Token</div>
@@ -63,8 +73,38 @@ export class GameView {
                     </div>
                 </div>
             </div>
+
+            
         `;
         this.app.innerHTML = html; 
+
+
+        //POP UP CODE START:
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal 
+        btn.onclick = function() {
+        modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+        modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+        }
+        //END POP UP CODE.
 
         locations.forEach((location)=>{
             this.ulTokens[location] 
@@ -72,6 +112,8 @@ export class GameView {
                     location.replace(' ','_') // spaces not valid in HTML IDs
                 ) as HTMLUListElement;
         })
+
+        
 
     }
 
@@ -107,4 +149,6 @@ export class GameView {
             this.ulTokens[location].appendChild(li);
         });   
     }
+
+    
 }

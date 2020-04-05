@@ -24,7 +24,16 @@ export class ContactController{
             if(err){
                 res.send(err);
             }
-            res.json(contact);
+
+            // Just a test of modifying all token text
+            // from our Mongo query before returning
+            // through /token API route...
+            // contact.forEach(token => {
+            //     token.token += '!';
+            // });
+            // console.log(JSON.stringify(contact));
+
+            res.json(contact); 
         });
     }
 

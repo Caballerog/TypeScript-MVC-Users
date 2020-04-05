@@ -16,6 +16,7 @@ export class ChallengeView {
   private app: HTMLElement;
   private form: HTMLElement;
   private submitButton: HTMLElement;
+  private gameOnButton: HTMLElement;
   private inputName: HTMLInputElement;
   private inputWinLossRecord: HTMLInputElement;
   private title: HTMLElement;
@@ -35,14 +36,22 @@ export class ChallengeView {
     this.createInput({
       key: 'inputWinLossRecord',
       type: 'text',
-      placeholder: 'Win/Loss',
+      placeholder: 'Win / Loss',
       name: 'winLossRecord'
     });
 
     this.submitButton = this.createElement('button');
     this.submitButton.textContent = 'Submit';
 
-    this.form.append(this.inputName, this.inputWinLossRecord, this.submitButton);
+    this.gameOnButton = this.createElement('button');
+    this.gameOnButton.textContent = 'Game On!';
+
+    this.form.append(this.inputName, this.inputWinLossRecord, this.submitButton, this.gameOnButton);
+
+    this.gameOnButton.addEventListener('click', event => {
+      const { origin, pathname } = location;
+          location.replace(origin+pathname+'?page=game');
+    });
 
     this.title = this.createElement('h1');
     this.title.textContent = 'Challenge';
@@ -132,6 +141,7 @@ export class ChallengeView {
       });
     }
   }
+
 
   _initLocalListeners() {
     this.userList.addEventListener('input', event => {

@@ -10,7 +10,6 @@ class App {
 
     public app: express.Application = express();
     public routePrv: Routes = new Routes();
-    // public mongoUrl: string = 'mongodb://localhost:27017/test';
     public mongoUrl = process.env.mongodb_url;
 
     constructor() {

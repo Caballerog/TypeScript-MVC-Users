@@ -15,7 +15,7 @@ export class Routes {
         })
         
         // Contact 
-        app.route('/contact')
+        app.route('/token')
         .get((req: Request, res: Response, next: NextFunction) => {
             // middleware
             console.log(`Request from: ${req.originalUrl}`);
@@ -31,7 +31,7 @@ export class Routes {
         .post(this.contactController.addNewContact);
 
         // Contact detail
-        app.route('/contact/:contactId')
+        app.route('/token/:contactId')
         // get specific contact
         .get(this.contactController.getContactWithID)
         .put(this.contactController.updateContact)

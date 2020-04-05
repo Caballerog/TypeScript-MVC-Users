@@ -1,7 +1,8 @@
 import { GameToken, GameTokens, Location, locations } 
   from '../models/client.game.model';
-import { sampleGameTokens } from '../models/client.game.mock';
-import { TokenID } from '../models/exercise.model';
+import { Fetch } from '../utils/Fetch';
+// import { sampleGameTokens } from '../models/client.game.mock';
+import { TokenID, ExerciseToken, Exercise } from '../models/exercise.model';
 
 type Direction = 1 | -1;
 
@@ -15,7 +16,7 @@ type OnTokenArrayChanged = (x : GameToken[]) => (void);
  * Manages the data of the application.
  */
 export class GameService {
-  private tokens : GameTokens;
+  private tokens : GameTokens = {};
   private tokenLocationArray : {
     [location:string/*Location*/] : TokenID[]
   } = {};
@@ -24,28 +25,30 @@ export class GameService {
     [location:string/*Location*/] : OnTokenArrayChanged
   } = {};
 
-  private stuff = 'stuff!'
-
   constructor() {
-    // Initially load of all game tokens to 
-    // the central game token storage object
-    // with a location setting of conveyor...
-    this.tokens = sampleGameTokens.reduce(
-      (result,exerciseToken,index) => {
-        result[exerciseToken.id] 
-          = { ...exerciseToken, 
-              location: //'conveyor'
-              locations[ ((index%4)?0:2) / (index%8?2:1) ] // test: distribute using modulus 
-            }
-        return result;
-      }, {} as GameTokens);
-
-    // ... and reference all tokens in the ordered location arrays...
+    // Initialize location arrays...
     locations.forEach((location)=> {
       this.tokenLocationArray[location] = []; // initialize arrays
     });
-    // Compute location arrays for initial tokens state...
-    this.refreshLocationArrays();
+
+    Fetch('/token')
+      .then(res => res && res.json())
+      .then( (exerciseTokens : Array<ExerciseToken>) => {
+        // Load all game tokens to
+        // the central game token storage object
+        // with a location setting of conveyor...
+        this.tokens = exerciseTokens.reduce(
+          (result,exerciseToken,index) => {
+            result[exerciseToken.id] 
+              = { ...exerciseToken, 
+                  location: 'conveyor'
+                }
+            return result;
+          }, {} as GameTokens
+        );
+        this.refreshLocationArrays();
+        this.commit(locations);
+      });
   }
 
   public bindTokenLocationChanged(

@@ -3,25 +3,20 @@ import * as mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 export const ContactSchema = new Schema({
-    firstName: {
+    id: {
         type: String,
-        required: 'Enter a first name'
+        required: 'Enter a token id'
     },
-    lastName: {
+    token: {
         type: String,
-        required: 'Enter a first name'
+        required: 'Enter a token character string'
     },
-    email: {
-        type: String            
+    type: {
+        type: String,
+        required: 'Enter a token type'         
     },
-    company: {
-        type: String            
-    },
-    phone: {
-        type: Number            
-    },
-    created_date: {
-        type: Date,
-        default: Date.now
+    cost: {
+        type: Number,
+        required: 'Enter a token cost (numeric)'         
     }
 });

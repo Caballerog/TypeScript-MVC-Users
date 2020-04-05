@@ -22,6 +22,7 @@
     "url": "https://github.com/Caballerog/TypeScript-MVC-Users/issues"
   },
   "homepage": "https://github.com/Caballerog/TypeScript-MVC-Users#readme",
+  "proxy": "http://localhost:3000",
   "devDependencies": {
     "@types/node": "^11.9.5",
     "@types/pixi.js": "^4.8.9",
@@ -34,6 +35,7 @@
     "gulp-rename": "^1.4.0",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-useref": "^3.1.6",
+    "http-proxy-middleware": "1.0.3",
     "prettier": "^1.18.2",
     "tsify": "^4.0.1",
     "typescript": "^3.6.4",

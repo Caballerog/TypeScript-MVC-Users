@@ -2,7 +2,9 @@ import * as mongoose from 'mongoose';
 import { ContactSchema } from '../models/crmModel';
 import { Request, Response } from 'express';
 
-const Contact = mongoose.model('Contact', ContactSchema);
+mongoose.pluralize(null);
+
+const Contact = mongoose.model('ForLoop', ContactSchema);
 
 export class ContactController{
 

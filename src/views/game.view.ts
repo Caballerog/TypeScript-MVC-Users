@@ -86,7 +86,7 @@ export class GameView {
         var btn = document.getElementById("myBtn");
 
         // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+        var span : HTMLSpanElement = document.getElementsByClassName("close") as any;
 
         // When the user clicks the button, open the modal 
         btn.onclick = function() {

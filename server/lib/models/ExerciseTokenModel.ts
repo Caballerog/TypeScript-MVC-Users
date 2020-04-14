@@ -2,7 +2,7 @@ import * as mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
-export const ContactSchema = new Schema({
+export const ExerciseTokenSchema = new Schema({
     id: {
         type: String,
         required: 'Enter a token id'
@@ -20,3 +20,5 @@ export const ContactSchema = new Schema({
         required: 'Enter a token cost (numeric)'         
     }
 });
+
+console.log(ExerciseTokenSchema)

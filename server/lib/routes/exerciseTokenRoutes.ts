@@ -1,9 +1,9 @@
 import {Request, Response, NextFunction} from "express";
-import { ContactController } from "../controllers/crmController";
+import { ExerciseTokenController } from "../controllers/exerciseTokenController";
 
-export class Routes { 
+export class ExerciseTokenRoutes { 
     
-    public contactController: ContactController = new ContactController() 
+    public exerciseTokenController = new ExerciseTokenController();
     
     public routes(app): void {   
         
@@ -25,8 +25,8 @@ export class Routes {
 //            } else {
                 next();
 //            }                        
-        }, this.contactController.getContacts)        
-
+        }, this.exerciseTokenController.getExerciseTokens)        
+/*
         // POST endpoint
         .post(this.contactController.addNewContact);
 
@@ -36,6 +36,6 @@ export class Routes {
         .get(this.contactController.getContactWithID)
         .put(this.contactController.updateContact)
         .delete(this.contactController.deleteContact)
-
+*/
     }
 }

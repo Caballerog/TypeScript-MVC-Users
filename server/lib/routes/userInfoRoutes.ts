@@ -23,7 +23,15 @@ export class UserInfoRoutes {
             next(); // seems to be required          
         }, this.userInfoController.getUserInfo)
         // POST endpoint
-        .post(this.userInfoController.addNewUser);
+        .post(
+            /*
+            (req: Request, res: Response, next: NextFunction) => {
+                // middleware
+                console.log(`Request from: ${req.originalUrl}`);
+                console.log(`Request type: ${req.method}`);  
+                next(); // seems to be required          
+            }
+        ,*/ this.userInfoController.addNewUser);
 
 /*
         // POST endpoint

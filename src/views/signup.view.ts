@@ -1,3 +1,6 @@
+import { HandleAddUser } from "../controllers/signup.controller";
+import { UserInfo } from "../models/user.model";
+
 interface Input {
     name: string;
     email: string;
@@ -16,7 +19,7 @@ export class SignupView {
         this.app = document.getElementById('root')
             const html=`
             <div class='formCenter'>
-                <form id='Signup' method='post'>
+                <form id='Signup'>
                     <div class = 'box'>
                         <img src="http://icon-library.com/images/blitz-icon/blitz-icon-18.jpg" alt="Blitz Icon" width="128" height="128">
                         <h1>Code Blitz Signup</h1>
@@ -40,18 +43,18 @@ export class SignupView {
             </div>
         `;
         this.app.innerHTML =html;
+    }
 
+    public bindAddUser(handler: HandleAddUser) {
         document.getElementById('Signup')
             .addEventListener('submit', event => {
-                //event.preventDefault(); -- actually post is handy, no need for ajax call
-                const { origin, pathname } = location;
-                setTimeout(()=>{ 
-                    // timeout is temporary hack pending server auth implementation
-                    location.replace(origin+pathname+'?page=home');
-                })
-        });
-            
-    //    this._temporaryAgeText = '';
-    //    this._initLocalListeners();
+                event.preventDefault();
+                const fields = document.forms['Signup'].elements;
+                handler(new UserInfo(
+                    fields[0].value, // name
+                    fields[1].value, // email
+                    fields[2].value // password
+                ));
+            });
     }
-}
+} 

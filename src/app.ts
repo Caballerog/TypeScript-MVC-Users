@@ -3,6 +3,8 @@ import { ChallengeService } from './services/challenge.service';
 import { ChallengeView } from './views/challenge.view';
 import { LoginView } from './views/login.view';
 import { SignupView } from './views/signup.view';
+import { UserService } from './services/user.service';
+import { SignupController } from './controllers/signup.controller';
 import { HomeView } from './views/home.view';
 import { GameView } from './views/game.view';
 import { GameService } from './services/game.service';
@@ -14,10 +16,11 @@ let app /* : BaseController */;
 
 const urlParams = new URLSearchParams(window.location.search);
 const page = urlParams.get('page');
+const _id = urlParams.get('_id');
 
 switch (page) {
     case 'signup':
-        app = new SignupView();
+        app = new SignupController(new UserService(), new SignupView());
         break;
     case 'home':
         app = new HomeView();

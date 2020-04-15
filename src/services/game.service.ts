@@ -30,25 +30,28 @@ export class GameService {
     locations.forEach((location)=> {
       this.tokenLocationArray[location] = []; // initialize arrays
     });
-
+    // Read exercise data from server and load it
     Fetch('/token')
       .then(res => res && res.json())
-      .then( (exerciseTokens : Array<ExerciseToken>) => {
-        // Load all game tokens to
-        // the central game token storage object
-        // with a location setting of conveyor...
-        this.tokens = exerciseTokens.reduce(
-          (result,exerciseToken,index) => {
-            result[exerciseToken.id] 
-              = { ...exerciseToken, 
-                  location: 'conveyor'
-                }
-            return result;
-          }, {} as GameTokens
-        );
-        this.refreshLocationArrays();
-        this.commit(locations);
-      });
+      .then( this.loadExercise.bind(this) );
+  }
+
+  private loadExercise(exerciseTokens:Array<ExerciseToken>)
+  {
+    // Load all game tokens to
+    // the central game token storage object
+    // with a location setting of conveyor...
+    this.tokens = exerciseTokens.reduce(
+      (result,exerciseToken,index) => {
+        result[exerciseToken.id] 
+          = { ...exerciseToken, 
+              location: 'conveyor'
+            }
+        return result;
+      }, {} as GameTokens
+    );
+    this.refreshLocationArrays();
+    this.commit(locations);
   }
 
   public bindTokenLocationChanged(

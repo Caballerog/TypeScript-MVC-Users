@@ -6,6 +6,8 @@ const challenge_service_1 = require("./services/challenge.service");
 const challenge_view_1 = require("./views/challenge.view");
 const login_view_1 = require("./views/login.view");
 const signup_view_1 = require("./views/signup.view");
+const user_service_1 = require("./services/user.service");
+const signup_controller_1 = require("./controllers/signup.controller");
 const home_view_1 = require("./views/home.view");
 const game_view_1 = require("./views/game.view");
 const game_service_1 = require("./services/game.service");
@@ -15,7 +17,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const page = urlParams.get('page');
 switch (page) {
     case 'signup':
-        app = new signup_view_1.SignupView();
+        app = new signup_controller_1.SignupController(new user_service_1.UserService(), new signup_view_1.SignupView());
         break;
     case 'home':
         app = new home_view_1.HomeView();
@@ -38,7 +40,7 @@ switch (page) {
         break;
 }
 
-},{"./controllers/challenge.controller":2,"./controllers/game.controller":3,"./services/challenge.service":6,"./services/game.service":7,"./views/challenge.view":10,"./views/game.view":11,"./views/home.view":12,"./views/login.view":13,"./views/signup.view":14}],2:[function(require,module,exports){
+},{"./controllers/challenge.controller":2,"./controllers/game.controller":3,"./controllers/signup.controller":4,"./services/challenge.service":8,"./services/game.service":9,"./services/user.service":10,"./views/challenge.view":13,"./views/game.view":14,"./views/home.view":15,"./views/login.view":16,"./views/signup.view":17}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -110,13 +112,26 @@ class GameController {
         // NOTE: Cannot directly call this.gameService.moveToken()
         // from here because context is NOT properly conveyed
         // to service method.  We MUST call handleMoveToken below.
-        // STUDY THIS MORE!
+        // (REVIEW: THIS PATTERN)
         this.gameView.bindMoveToken(this.handleMoveToken);
     }
 }
 exports.GameController = GameController;
 
-},{"../models/client.game.model":5}],4:[function(require,module,exports){
+},{"../models/client.game.model":6}],4:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class SignupController {
+    constructor(userService, signupView) {
+        this.userService = userService;
+        this.signupView = signupView;
+        this.handleAddUser = (userInfo) => (this.userService.addUser(userInfo));
+        this.signupView.bindAddUser(this.handleAddUser);
+    }
+}
+exports.SignupController = SignupController;
+
+},{}],5:[function(require,module,exports){
 "use strict";
 /**
  * @class Model
@@ -139,12 +154,29 @@ class Challenge {
 }
 exports.Challenge = Challenge;
 
-},{"../utils/util":9}],5:[function(require,module,exports){
+},{"../utils/util":12}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.locations = ['conveyor', 'token bank', 'code'];
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class UserInfo {
+    constructor(name, email, password, language = 'Javascript', online = true, wins = 0, losses = 0, avgScore = 0) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.language = language;
+        this.online = online;
+        this.wins = wins;
+        this.losses = losses;
+        this.avgScore = avgScore;
+    }
+}
+exports.UserInfo = UserInfo;
+
+},{}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const challenge_model_1 = require("../models/challenge.model");
@@ -186,7 +218,7 @@ class ChallengeService {
 }
 exports.ChallengeService = ChallengeService;
 
-},{"../models/challenge.model":4}],7:[function(require,module,exports){
+},{"../models/challenge.model":5}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_game_model_1 = require("../models/client.game.model");
@@ -205,20 +237,22 @@ class GameService {
         client_game_model_1.locations.forEach((location) => {
             this.tokenLocationArray[location] = []; // initialize arrays
         });
+        // Read exercise data from server and load it
         Fetch_1.Fetch('/token')
             .then(res => res && res.json())
-            .then((exerciseTokens) => {
-            // Load all game tokens to
-            // the central game token storage object
-            // with a location setting of conveyor...
-            this.tokens = exerciseTokens.reduce((result, exerciseToken, index) => {
-                result[exerciseToken.id]
-                    = Object.assign(Object.assign({}, exerciseToken), { location: 'conveyor' });
-                return result;
-            }, {});
-            this.refreshLocationArrays();
-            this.commit(client_game_model_1.locations);
-        });
+            .then(this.loadExercise.bind(this));
+    }
+    loadExercise(exerciseTokens) {
+        // Load all game tokens to
+        // the central game token storage object
+        // with a location setting of conveyor...
+        this.tokens = exerciseTokens.reduce((result, exerciseToken, index) => {
+            result[exerciseToken.id]
+                = Object.assign(Object.assign({}, exerciseToken), { location: 'conveyor' });
+            return result;
+        }, {});
+        this.refreshLocationArrays();
+        this.commit(client_game_model_1.locations);
     }
     bindTokenLocationChanged(tokenLocation, callback) {
         this.onTokenLocationChanged[tokenLocation] = callback;
@@ -281,7 +315,22 @@ class GameService {
 }
 exports.GameService = GameService;
 
-},{"../models/client.game.model":5,"../utils/Fetch":8}],8:[function(require,module,exports){
+},{"../models/client.game.model":6,"../utils/Fetch":11}],10:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const Fetch_1 = require("../utils/Fetch");
+class UserService {
+    addUser(userInfo) {
+        return Fetch_1.Fetch('/user', {
+            method: 'POST',
+            body: JSON.stringify(userInfo)
+        })
+            .then(res => res && res.json());
+    }
+}
+exports.UserService = UserService;
+
+},{"../utils/Fetch":11}],11:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Fetch = (resource, init = { method: 'GET' }, defaultMessage = true) => {
@@ -309,7 +358,7 @@ exports.Fetch = (resource, init = { method: 'GET' }, defaultMessage = true) => {
     });
 };
 
-},{}],9:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uuidv4 = () => {
@@ -317,7 +366,7 @@ exports.uuidv4 = () => {
         (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16));
 };
 
-},{}],10:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class ChallengeView {
@@ -468,7 +517,7 @@ class ChallengeView {
 }
 exports.ChallengeView = ChallengeView;
 
-},{}],11:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_game_model_1 = require("../models/client.game.model");
@@ -508,8 +557,6 @@ class GameView {
                         <div class='opponentCode'>
                         </div>
 
-                        
-                        
                         <button id="myBtn"><div class='submitButton'><div class='submit'>SUBMIT CODE</div>
                         </div></button>
                         <div id="myModal" class="modal">
@@ -598,7 +645,7 @@ class GameView {
 }
 exports.GameView = GameView;
 
-},{"../models/client.game.model":5}],12:[function(require,module,exports){
+},{"../models/client.game.model":6}],15:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class HomeView {
@@ -609,7 +656,7 @@ class HomeView {
             <form id='homePage' method='post'>
                 <div class = 'box'>
                     <img src="http://icon-library.com/images/blitz-icon/blitz-icon-18.jpg" alt="Blitz Icon" width="128" height="128">
-                    <h1>Clode Blitz</h1>
+                    <h1>Code Blitz</h1>
                     <div>
                         <button id='challenge' type='submit'>Challenge</button>
                         <button id='singlePlay' type='submit'>Single Play</button>
@@ -638,7 +685,7 @@ class HomeView {
 }
 exports.HomeView = HomeView;
 
-},{}],13:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class LoginView {
@@ -649,7 +696,7 @@ class LoginView {
             <form id='loginForm' method='post'>
                 <div class = 'box'>
                     <img src="http://icon-library.com/images/blitz-icon/blitz-icon-18.jpg" alt="Blitz Icon" width="128" height="128">
-                    <h1>Clode Blitz</h1>
+                    <h1>Code Blitz</h1>
                     <div>
                         <img src="http://icons.iconarchive.com/icons/custom-icon-design/mono-general-2/512/mail-icon.png" alt="Mail Icon" width="20" height="20">
                         <input name='email' type='text' placeholder='Email' />
@@ -685,18 +732,19 @@ class LoginView {
 }
 exports.LoginView = LoginView;
 
-},{}],14:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const user_model_1 = require("../models/user.model");
 class SignupView {
     constructor() {
         this.app = document.getElementById('root');
         const html = `
             <div class='formCenter'>
-                <form id='Signup' method='post'>
+                <form id='Signup'>
                     <div class = 'box'>
                         <img src="http://icon-library.com/images/blitz-icon/blitz-icon-18.jpg" alt="Blitz Icon" width="128" height="128">
-                        <h1>Clode Blitz Signup</h1>
+                        <h1>Code Blitz Signup</h1>
                         <div>
                             <img src="https://cdn2.iconfinder.com/data/icons/font-awesome/1792/user-512.png" alt="user Icon" width="20" height="20">
                             <input name='name' type='text' placeholder='Name' />            
@@ -717,21 +765,26 @@ class SignupView {
             </div>
         `;
         this.app.innerHTML = html;
+    }
+    bindAddUser(handler) {
         document.getElementById('Signup')
             .addEventListener('submit', event => {
-            //event.preventDefault(); -- actually post is handy, no need for ajax call
+            event.preventDefault();
             const { origin, pathname } = location;
-            setTimeout(() => {
-                // timeout is temporary hack pending server auth implementation
-                location.replace(origin + pathname + '?page=home');
+            const fields = document.forms['Signup'].elements;
+            alert(JSON.stringify(document.forms['Signup'].elements[1].value));
+            handler(new user_model_1.UserInfo(fields[0].value, // name
+            fields[1].value, // email
+            fields[2].value // password
+            )).then(res => {
+                alert(JSON.stringify(res));
+                location.replace(origin + pathname + '?page=home&_id=' + res._id);
             });
         });
-        //    this._temporaryAgeText = '';
-        //    this._initLocalListeners();
     }
 }
 exports.SignupView = SignupView;
 
-},{}]},{},[1]);
+},{"../models/user.model":7}]},{},[1]);
 
 //# sourceMappingURL=bundle.js.map

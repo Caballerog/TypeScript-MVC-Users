@@ -28,7 +28,7 @@ export const UserInfoSchema = new Schema({
         type: String,
         required: 'Programming language choice'
     },
-    onLine: {
+    online: {
         type: Boolean,
         required: 'Flag to indicate use is online'
     },

@@ -13,8 +13,6 @@ export class GameView {
     constructor() {
         this.app = document.getElementById('root');
 
-        
-
         const html = `
             <div class='game-page'>
                 <div class='flex5'>
@@ -47,8 +45,6 @@ export class GameView {
                         <div class='opponentCode'>
                         </div>
 
-                        
-                        
                         <button id="myBtn"><div class='submitButton'><div class='submit'>SUBMIT CODE</div>
                         </div></button>
                         <div id="myModal" class="modal">
@@ -112,9 +108,6 @@ export class GameView {
                     location.replace(' ','_') // spaces not valid in HTML IDs
                 ) as HTMLUListElement;
         })
-
-        
-
     }
 
     public bindMoveToken(handler: HandleMoveToken) {
@@ -149,6 +142,5 @@ export class GameView {
             this.ulTokens[location].appendChild(li);
         });   
     }
-
-    
+   
 }

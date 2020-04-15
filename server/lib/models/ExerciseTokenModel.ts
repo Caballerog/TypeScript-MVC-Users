@@ -21,4 +21,3 @@ export const ExerciseTokenSchema = new Schema({
     }
 });
 
-console.log(ExerciseTokenSchema)

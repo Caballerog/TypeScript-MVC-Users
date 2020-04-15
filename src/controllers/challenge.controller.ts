@@ -2,6 +2,9 @@ import { Challenge } from '../models/challenge.model';
 import { ChallengeService } from '../services/challenge.service';
 import { ChallengeView } from '../views/challenge.view';
 
+export type HandleStartChallenge 
+  = typeof ChallengeController.prototype.handleStartChallenge;
+
 /**
  * @class Controller
  *
@@ -11,35 +14,57 @@ import { ChallengeView } from '../views/challenge.view';
  * @param view
  */
 export class ChallengeController {
-  constructor(private userService: ChallengeService, private userView: ChallengeView) {
+  constructor(
+      private session_id: string,
+      private challengeService: ChallengeService, 
+      private challengeView: ChallengeView
+  ) {
     // Explicit this binding
-    this.userService.bindUserListChanged(this.onUserListChanged);
-    this.userView.bindAddUser(this.handleAddUser);
-    this.userView.bindEditUser(this.handleEditUser);
-    this.userView.bindDeleteUser(this.handleDeleteUser);
-    this.userView.bindToggleUser(this.handleToggleUser);
+    this.challengeService.bindUserListChanged(this.onUserListChanged);
+
+    // First "real" Code blitz handler... :)
+    this.challengeView.bindStartChallenge(this.handleStartChallenge);
+
+    // Useful examples refactored from original MVC template...
+    // (Renamed from contact/user application to Code Blitz/challenge
+    //  but may be further modified (or removed)...)
+    this.challengeView.bindAddUser(this.handleAddUser);
+    this.challengeView.bindEditUser(this.handleEditUser);
+    this.challengeView.bindDeleteUser(this.handleDeleteUser);
+    this.challengeView.bindToggleUser(this.handleToggleUser);
 
     // Display initial users
-    this.onUserListChanged(this.userService.users);
+    this.onUserListChanged(this.challengeService.users);
   }
 
-  onUserListChanged = (users: Challenge[]) => {
-    this.userView.displayUsers(users);
+  onUserListChanged = (challenge: Challenge[]) => {
+    this.challengeView.displayUsers(challenge);
   };
 
-  handleAddUser = (user: Challenge) => {
-    this.userService.add(user);
+  handleStartChallenge = (challenge : Challenge) => {
+    // TODO: call this.challengeService to 
+    // initialize and record (in Mongo) the 
+    // start of a challenge, e.g...
+    //this.challengeService.startChallenge(challenge)...
+
+    // And route to game play page...
+    const { origin, pathname } = location;
+    location.replace(origin+pathname+'?page=game&session_id='+this.session_id);    
+  }
+
+  handleAddUser = (challenge: Challenge) => {
+    this.challengeService.add(challenge);
   };
 
-  handleEditUser = (id: string, user: Challenge) => {
-    this.userService.edit(id, user);
+  handleEditUser = (id: string, challenge: Challenge) => {
+    this.challengeService.edit(id, challenge);
   };
 
   handleDeleteUser = (id: string) => {
-    this.userService.delete(id);
+    this.challengeService.delete(id);
   };
 
   handleToggleUser = (id: string) => {
-    this.userService.toggle(id);
+    this.challengeService.toggle(id);
   };
 }

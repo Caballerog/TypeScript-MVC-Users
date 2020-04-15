@@ -1,19 +1,14 @@
-interface Input {
-    email: string;
-    password: string;
-}
+import { HandleStartPlay } from '../controllers/home.controller';
+
 export class HomeView {
     private app: HTMLElement;
-    private challengeButton: HTMLElement;
-    private singlePlayButton: HTMLElement;
-    private title: HTMLElement;
 
     constructor() {
         this.app = document.getElementById('root');
 
         const html = `
         <div class='formCenter'>
-            <form id='homePage' method='post'>
+            <form id='homePage'>
                 <div class = 'box'>
                     <img src="http://icon-library.com/images/blitz-icon/blitz-icon-18.jpg" alt="Blitz Icon" width="128" height="128">
                     <h1>Code Blitz</h1>
@@ -26,23 +21,20 @@ export class HomeView {
         </div>
         `;
         this.app.innerHTML = html;
+    }
 
-        document.getElementById('homePage')
-            .addEventListener('submit', event => {
-                //event.preventDefault(); -- actually post is handy, no need for ajax call
-                const { origin, pathname } = location;
-                setTimeout(()=>{ 
-                    // timeout is temporary hack pending server auth implementation
-                    location.replace(origin+pathname+'?page=challenge');
+    public bindStartPlay(handler : HandleStartPlay) 
+    {
+        [...document.getElementsByTagName("button")]
+            .forEach( (element : HTMLButtonElement) => {
+                element.addEventListener('click', event => {
+                    event.preventDefault();
+                    const buttonID = 
+                    ( ((event.target as HTMLButtonElement).id as any) as
+                        // Satisfy Typescript handler prototype... :)
+                        'challenge'|'singlePlay' ); 
+                    handler(buttonID);
                 })
-        });
-
-        document.getElementById('singlePlay')
-        .addEventListener('click', event => {
-            alert('not yet implemented')
-        });
-        
-    //    this._temporaryAgeText = '';
-    //    this._initLocalListeners();
+            });
     }
 }

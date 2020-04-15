@@ -42,7 +42,7 @@ export class SignupView {
                 </form>
             </div>
         `;
-        this.app.innerHTML =html;
+        this.app.innerHTML = html;
     }
 
     public bindAddUser(handler: HandleAddUser) {

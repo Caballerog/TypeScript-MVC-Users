@@ -1,4 +1,5 @@
 import { Challenge } from '../models/challenge.model';
+import { HandleStartChallenge } from '../controllers/challenge.controller';
 
 /**
  * @class View
@@ -46,13 +47,17 @@ export class ChallengeView {
     this.gameOnButton = this.createElement('button');
     this.gameOnButton.textContent = 'Game On!';
 
-    this.form.append(this.inputName, this.inputWinLossRecord, this.submitButton, this.gameOnButton);
-
+    this.form.append(
+      this.inputName, 
+      this.inputWinLossRecord, 
+      this.submitButton, 
+      this.gameOnButton);
+/*
     this.gameOnButton.addEventListener('click', event => {
       const { origin, pathname } = location;
           location.replace(origin+pathname+'?page=game');
     });
-
+*/
     this.title = this.createElement('h1');
     this.title.textContent = 'Challenge';
     this.userList = this.createElement('ul', 'user-list');
@@ -142,12 +147,29 @@ export class ChallengeView {
     }
   }
 
-
   _initLocalListeners() {
     this.userList.addEventListener('input', event => {
       if ((event.target as any).className === 'editable') {
         this._temporaryWinLossText = (event.target as any).innerText;
       }
+    });
+  }
+
+  bindStartChallenge(handler: HandleStartChallenge) {
+    this.gameOnButton.addEventListener('click', event => {
+      //
+      // NOTE: Passing a Challenge object is probably 
+      // not needed, but I'm just continuing with
+      // the MVC template pattern for now.
+      // (Feel free to remove/simplify/refactor...)
+      // We'll probably reflect challenge and game play
+      // "state" all in Mongo, and our services can 
+      // always get that information via a Mongoose query.
+      //
+      handler(new Challenge({
+        name: this._nameText,
+        winLossRecord: this._winLossRecordText,
+        online: true/*online*/}))
     });
   }
 

@@ -9,21 +9,27 @@ const signup_view_1 = require("./views/signup.view");
 const user_service_1 = require("./services/user.service");
 const signup_controller_1 = require("./controllers/signup.controller");
 const home_view_1 = require("./views/home.view");
+const home_controller_1 = require("./controllers/home.controller");
 const game_view_1 = require("./views/game.view");
 const game_service_1 = require("./services/game.service");
 const game_controller_1 = require("./controllers/game.controller");
-let app /* : BaseController */;
+// REVIEW: Most specific type found so far since:
+// classes are functions, and functions are objects in js...
+// (Class instances are not defined as function subtypes though,
+//  and lack bind(), call(), etc...)
+let app;
 const urlParams = new URLSearchParams(window.location.search);
 const page = urlParams.get('page');
+const session_id = urlParams.get('session_id');
 switch (page) {
     case 'signup':
         app = new signup_controller_1.SignupController(new user_service_1.UserService(), new signup_view_1.SignupView());
         break;
     case 'home':
-        app = new home_view_1.HomeView();
+        app = new home_controller_1.HomeController(session_id, new home_view_1.HomeView());
         break;
     case 'challenge':
-        app = new challenge_controller_1.ChallengeController(new challenge_service_1.ChallengeService(), new challenge_view_1.ChallengeView());
+        app = new challenge_controller_1.ChallengeController(session_id, new challenge_service_1.ChallengeService(), new challenge_view_1.ChallengeView());
         break;
     case 'game':
         app = new game_controller_1.GameController(new game_service_1.GameService(), new game_view_1.GameView());
@@ -40,7 +46,7 @@ switch (page) {
         break;
 }
 
-},{"./controllers/challenge.controller":2,"./controllers/game.controller":3,"./controllers/signup.controller":4,"./services/challenge.service":8,"./services/game.service":9,"./services/user.service":10,"./views/challenge.view":13,"./views/game.view":14,"./views/home.view":15,"./views/login.view":16,"./views/signup.view":17}],2:[function(require,module,exports){
+},{"./controllers/challenge.controller":2,"./controllers/game.controller":3,"./controllers/home.controller":4,"./controllers/signup.controller":5,"./services/challenge.service":9,"./services/game.service":10,"./services/user.service":11,"./views/challenge.view":14,"./views/game.view":15,"./views/home.view":16,"./views/login.view":17,"./views/signup.view":18}],2:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -52,32 +58,47 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @param view
  */
 class ChallengeController {
-    constructor(userService, userView) {
-        this.userService = userService;
-        this.userView = userView;
-        this.onUserListChanged = (users) => {
-            this.userView.displayUsers(users);
+    constructor(session_id, challengeService, challengeView) {
+        this.session_id = session_id;
+        this.challengeService = challengeService;
+        this.challengeView = challengeView;
+        this.onUserListChanged = (challenge) => {
+            this.challengeView.displayUsers(challenge);
         };
-        this.handleAddUser = (user) => {
-            this.userService.add(user);
+        this.handleStartChallenge = (challenge) => {
+            // TODO: call this.challengeService to 
+            // initialize and record (in Mongo) the 
+            // start of a challenge, e.g...
+            //this.challengeService.startChallenge(challenge)...
+            // And route to game play page...
+            const { origin, pathname } = location;
+            location.replace(origin + pathname + '?page=game&session_id=' + this.session_id);
         };
-        this.handleEditUser = (id, user) => {
-            this.userService.edit(id, user);
+        this.handleAddUser = (challenge) => {
+            this.challengeService.add(challenge);
+        };
+        this.handleEditUser = (id, challenge) => {
+            this.challengeService.edit(id, challenge);
         };
         this.handleDeleteUser = (id) => {
-            this.userService.delete(id);
+            this.challengeService.delete(id);
         };
         this.handleToggleUser = (id) => {
-            this.userService.toggle(id);
+            this.challengeService.toggle(id);
         };
         // Explicit this binding
-        this.userService.bindUserListChanged(this.onUserListChanged);
-        this.userView.bindAddUser(this.handleAddUser);
-        this.userView.bindEditUser(this.handleEditUser);
-        this.userView.bindDeleteUser(this.handleDeleteUser);
-        this.userView.bindToggleUser(this.handleToggleUser);
+        this.challengeService.bindUserListChanged(this.onUserListChanged);
+        // First "real" Code blitz handler... :)
+        this.challengeView.bindStartChallenge(this.handleStartChallenge);
+        // Useful examples refactored from original MVC template...
+        // (Renamed from contact/user application to Code Blitz/challenge
+        //  but may be further modified (or removed)...)
+        this.challengeView.bindAddUser(this.handleAddUser);
+        this.challengeView.bindEditUser(this.handleEditUser);
+        this.challengeView.bindDeleteUser(this.handleDeleteUser);
+        this.challengeView.bindToggleUser(this.handleToggleUser);
         // Display initial users
-        this.onUserListChanged(this.userService.users);
+        this.onUserListChanged(this.challengeService.users);
     }
 }
 exports.ChallengeController = ChallengeController;
@@ -118,20 +139,52 @@ class GameController {
 }
 exports.GameController = GameController;
 
-},{"../models/client.game.model":6}],4:[function(require,module,exports){
+},{"../models/client.game.model":7}],4:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class HomeController {
+    constructor(session_id, homeView) {
+        this.session_id = session_id;
+        this.homeView = homeView;
+        this.handleStartPlay = (mode) => {
+            const { origin, pathname } = location;
+            if (mode === 'challenge')
+                location.replace(origin + pathname
+                    + '?page=challenge&session_id=' + this.session_id);
+            else
+                alert('Single player mode not yet implemented.');
+        };
+        this.homeView.bindStartPlay(this.handleStartPlay);
+    }
+}
+exports.HomeController = HomeController;
+
+},{}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class SignupController {
     constructor(userService, signupView) {
         this.userService = userService;
         this.signupView = signupView;
-        this.handleAddUser = (userInfo) => (this.userService.addUser(userInfo));
+        this.handleAddUser = (userInfo) => {
+            this.userService.addUser(userInfo)
+                .then(res => {
+                const { origin, pathname } = location;
+                if (res._id)
+                    location.replace(origin + pathname + '?page=home&session_id=' + res._id);
+                else
+                    throw res;
+            })
+                .catch(reason => {
+                alert(`Failed to create new user; reason=${JSON.stringify(reason)}`);
+            });
+        };
         this.signupView.bindAddUser(this.handleAddUser);
     }
 }
 exports.SignupController = SignupController;
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 /**
  * @class Model
@@ -154,12 +207,12 @@ class Challenge {
 }
 exports.Challenge = Challenge;
 
-},{"../utils/util":12}],6:[function(require,module,exports){
+},{"../utils/util":13}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.locations = ['conveyor', 'token bank', 'code'];
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class UserInfo {
@@ -176,7 +229,7 @@ class UserInfo {
 }
 exports.UserInfo = UserInfo;
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const challenge_model_1 = require("../models/challenge.model");
@@ -218,7 +271,7 @@ class ChallengeService {
 }
 exports.ChallengeService = ChallengeService;
 
-},{"../models/challenge.model":5}],9:[function(require,module,exports){
+},{"../models/challenge.model":6}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_game_model_1 = require("../models/client.game.model");
@@ -315,7 +368,7 @@ class GameService {
 }
 exports.GameService = GameService;
 
-},{"../models/client.game.model":6,"../utils/Fetch":11}],10:[function(require,module,exports){
+},{"../models/client.game.model":7,"../utils/Fetch":12}],11:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Fetch_1 = require("../utils/Fetch");
@@ -330,7 +383,7 @@ class UserService {
 }
 exports.UserService = UserService;
 
-},{"../utils/Fetch":11}],11:[function(require,module,exports){
+},{"../utils/Fetch":12}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Fetch = (resource, init = { method: 'GET' }, defaultMessage = true) => {
@@ -338,6 +391,7 @@ exports.Fetch = (resource, init = { method: 'GET' }, defaultMessage = true) => {
     _init.headers = _init.headers || {};
     _init.headers['Content-Type'] = _init.headers['Content-Type'] || 'application/json; charset=utf-8';
     return new Promise((resolve, reject) => {
+        const { origin, pathname } = location;
         return fetch(resource, _init)
             .then(res => {
             if (res.status >= 400 /* Http error response range */) {
@@ -358,7 +412,7 @@ exports.Fetch = (resource, init = { method: 'GET' }, defaultMessage = true) => {
     });
 };
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uuidv4 = () => {
@@ -366,9 +420,10 @@ exports.uuidv4 = () => {
         (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16));
 };
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const challenge_model_1 = require("../models/challenge.model");
 class ChallengeView {
     constructor() {
         this.app = document.querySelector('#root');
@@ -390,10 +445,12 @@ class ChallengeView {
         this.gameOnButton = this.createElement('button');
         this.gameOnButton.textContent = 'Game On!';
         this.form.append(this.inputName, this.inputWinLossRecord, this.submitButton, this.gameOnButton);
-        this.gameOnButton.addEventListener('click', event => {
-            const { origin, pathname } = location;
-            location.replace(origin + pathname + '?page=game');
-        });
+        /*
+            this.gameOnButton.addEventListener('click', event => {
+              const { origin, pathname } = location;
+                  location.replace(origin+pathname+'?page=game');
+            });
+        */
         this.title = this.createElement('h1');
         this.title.textContent = 'Challenge';
         this.userList = this.createElement('ul', 'user-list');
@@ -476,6 +533,24 @@ class ChallengeView {
             }
         });
     }
+    bindStartChallenge(handler) {
+        this.gameOnButton.addEventListener('click', event => {
+            //
+            // NOTE: Passing a Challenge object is probably 
+            // not needed, but I'm just continuing with
+            // the MVC template pattern for now.
+            // (Feel free to remove/simplify/refactor...)
+            // We'll probably reflect challenge and game play
+            // "state" all in Mongo, and our services can 
+            // always get that information via a Mongoose query.
+            //
+            handler(new challenge_model_1.Challenge({
+                name: this._nameText,
+                winLossRecord: this._winLossRecordText,
+                online: true /*online*/
+            }));
+        });
+    }
     bindAddUser(handler) {
         this.form.addEventListener('submit', event => {
             event.preventDefault();
@@ -517,7 +592,7 @@ class ChallengeView {
 }
 exports.ChallengeView = ChallengeView;
 
-},{}],14:[function(require,module,exports){
+},{"../models/challenge.model":6}],15:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const client_game_model_1 = require("../models/client.game.model");
@@ -645,7 +720,7 @@ class GameView {
 }
 exports.GameView = GameView;
 
-},{"../models/client.game.model":6}],15:[function(require,module,exports){
+},{"../models/client.game.model":7}],16:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class HomeView {
@@ -653,7 +728,7 @@ class HomeView {
         this.app = document.getElementById('root');
         const html = `
         <div class='formCenter'>
-            <form id='homePage' method='post'>
+            <form id='homePage'>
                 <div class = 'box'>
                     <img src="http://icon-library.com/images/blitz-icon/blitz-icon-18.jpg" alt="Blitz Icon" width="128" height="128">
                     <h1>Code Blitz</h1>
@@ -666,26 +741,21 @@ class HomeView {
         </div>
         `;
         this.app.innerHTML = html;
-        document.getElementById('homePage')
-            .addEventListener('submit', event => {
-            //event.preventDefault(); -- actually post is handy, no need for ajax call
-            const { origin, pathname } = location;
-            setTimeout(() => {
-                // timeout is temporary hack pending server auth implementation
-                location.replace(origin + pathname + '?page=challenge');
+    }
+    bindStartPlay(handler) {
+        [...document.getElementsByTagName("button")]
+            .forEach((element) => {
+            element.addEventListener('click', event => {
+                event.preventDefault();
+                const buttonID = event.target.id;
+                handler(buttonID);
             });
         });
-        document.getElementById('singlePlay')
-            .addEventListener('click', event => {
-            alert('not yet implemented');
-        });
-        //    this._temporaryAgeText = '';
-        //    this._initLocalListeners();
     }
 }
 exports.HomeView = HomeView;
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class LoginView {
@@ -732,7 +802,7 @@ class LoginView {
 }
 exports.LoginView = LoginView;
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_model_1 = require("../models/user.model");
@@ -770,21 +840,16 @@ class SignupView {
         document.getElementById('Signup')
             .addEventListener('submit', event => {
             event.preventDefault();
-            const { origin, pathname } = location;
             const fields = document.forms['Signup'].elements;
-            alert(JSON.stringify(document.forms['Signup'].elements[1].value));
             handler(new user_model_1.UserInfo(fields[0].value, // name
             fields[1].value, // email
             fields[2].value // password
-            )).then(res => {
-                alert(JSON.stringify(res));
-                location.replace(origin + pathname + '?page=home&_id=' + res._id);
-            });
+            ));
         });
     }
 }
 exports.SignupView = SignupView;
 
-},{"../models/user.model":7}]},{},[1]);
+},{"../models/user.model":8}]},{},[1]);
 
 //# sourceMappingURL=bundle.js.map

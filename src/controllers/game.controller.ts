@@ -27,7 +27,7 @@ export class GameController {
     // NOTE: Cannot directly call this.gameService.moveToken()
     // from here because context is NOT properly conveyed
     // to service method.  We MUST call handleMoveToken below.
-    // STUDY THIS MORE!
+    // (REVIEW: THIS PATTERN)
     this.gameView.bindMoveToken(this.handleMoveToken);   
   }
 

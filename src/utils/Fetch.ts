@@ -8,6 +8,8 @@ export var Fetch = (
     _init.headers['Content-Type'] = _init.headers['Content-Type'] || 'application/json; charset=utf-8';
 
     return new Promise<Response>((resolve,reject)=>{
+        const { origin, pathname } = location;
+
         return fetch(resource,_init)        
         .then(res => {
             if (res.status >= 400/* Http error response range */) {

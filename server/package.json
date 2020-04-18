@@ -1,5 +1,5 @@
 {
-  "name": "crm",
+  "name": "code-blitz-server",
   "version": "1.0.0",
   "description": "An API built with NodeJS, Express, MongoDB and TypeScript",
   "main": "dist/server.js",
@@ -12,14 +12,12 @@
     "prodOld": "npm run dev && npm run start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "Dale",
-    "Nguyen"
-  ],
-  "author": "Dale Nguyen <dungnq@itbox4vn.com> (http://dalenguyen.me)",
+  "keywords": [],
+  "author": "Sarah Lotherington, et. al.",
   "license": "ISC",
   "dependencies": {
     "@types/express": "^4.17.1",
+    "@types/mongoose": "^5.7.10",
     "body-parser": "^1.18.3",
     "express": "^4.17.1",
     "mongoose": "^5.7.5",

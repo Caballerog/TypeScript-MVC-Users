@@ -13,7 +13,7 @@ export class LoginView {
             <form id='loginForm' method='post'>
                 <div class = 'box'>
                     <img src="http://icon-library.com/images/blitz-icon/blitz-icon-18.jpg" alt="Blitz Icon" width="128" height="128">
-                    <h1>Clode Blitz</h1>
+                    <h1>Code Blitz</h1>
                     <div>
                         <img src="http://icons.iconarchive.com/icons/custom-icon-design/mono-general-2/512/mail-icon.png" alt="Mail Icon" width="20" height="20">
                         <input name='email' type='text' placeholder='Email' />

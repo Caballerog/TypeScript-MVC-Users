@@ -2,6 +2,7 @@ import { ChallengeController } from './controllers/challenge.controller';
 import { ChallengeService } from './services/challenge.service';
 import { ChallengeView } from './views/challenge.view';
 import { LoginView } from './views/login.view';
+import { LoginController } from './controllers/login.controller';
 import { SignupView } from './views/signup.view';
 import { UserService } from './services/user.service';
 import { SignupController } from './controllers/signup.controller';
@@ -42,7 +43,7 @@ switch (page) {
     case 'demo':
         break;        
     case 'login':
-        app = new LoginView();
+        app = new LoginController(new UserService(), new LoginView());
         break;
     default:
         const { origin, pathname } = location;

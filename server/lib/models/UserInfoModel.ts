@@ -7,15 +7,15 @@ export const UserInfoSchema = new Schema({
         type: String,
         required: 'Enter your display name'
     },
+    email: {
+        type: String,
+        required: 'Enter your email address',
+        index: {unique: true}
+    },
     password: {
         type: String,
         required: 'Enter a password'
     },
-    // 
-    // 'player_id' deprecated because we can probably 
-    //  convert this collection to rely on Mongo's
-    //  auto assigned "_id"
-    //
     wins: {
         type: Number,
         required: 'Enter wins record tally'         

@@ -38,8 +38,17 @@
     "http-proxy-middleware": "1.0.3",
     "prettier": "^1.18.2",
     "tsify": "^4.0.1",
-    "typescript": "^3.6.4",
+    "typescript": "^3.8.3",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "log4ts": "^0.4.2",
+    "mongoose": "^5.9.9",
+    "nodemon": "^2.0.3",
+    "typescript-logging": "^0.6.4"
   }
 }

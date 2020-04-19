@@ -23,26 +23,8 @@ export class UserInfoRoutes {
             next(); // seems to be required          
         }, this.userInfoController.getUserInfo)
         // POST endpoint
-        .post(
-            /*
-            (req: Request, res: Response, next: NextFunction) => {
-                // middleware
-                console.log(`Request from: ${req.originalUrl}`);
-                console.log(`Request type: ${req.method}`);  
-                next(); // seems to be required          
-            }
-        ,*/ this.userInfoController.addNewUser);
+        .post(this.userInfoController.addNewUser);
 
-/*
-        // POST endpoint
-        .post(this.contactController.addNewContact);
-
-        // Contact detail
-        app.route('/token/:contactId')
-        // get specific contact
-        .get(this.contactController.getContactWithID)
-        .put(this.contactController.updateContact)
-        .delete(this.contactController.deleteContact)
-*/
+        app.route('/user/:email.:password').get(this.userInfoController.authUser);
     }
 }

@@ -10,4 +10,12 @@ export class UserService {
         })
         .then( res => res && res.json() );
     }
+
+    public findUser(userInfo:UserInfo)
+    {
+        return Fetch('/user/'+userInfo.email+'.'+userInfo.password, {
+            method: 'GET',
+        })
+        .then(res => res && res.json());
+    }
 }

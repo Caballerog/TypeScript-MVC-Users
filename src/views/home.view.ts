@@ -10,7 +10,7 @@ export class HomeView {
         <div class='formCenter'>
             <form id='homePage'>
                 <div class = 'box'>
-                    <img src="http://icon-library.com/images/blitz-icon/blitz-icon-18.jpg" alt="Blitz Icon" width="128" height="128">
+                    <img src="images/Codeblitz.png" alt="Blitz Icon" width="128" height="128">
                     <h1>Code Blitz</h1>
                     <div>
                         <button id='challenge' type='submit'>Challenge</button>

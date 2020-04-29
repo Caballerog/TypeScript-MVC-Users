@@ -21,8 +21,7 @@ export class SignupView {
             <div class='formCenter'>
                 <form id='Signup'>
                     <div class = 'box'>
-                        <img src="/Users/pseba/Desktop/codeblitzz/src/images/manzana.png" border="1" alt="Red Apple">
-                        <img src="Codeblitz.png" border="1" alt="blitz icon" width="400" height="300">
+                        <img src="images/Codeblitz.png" alt="Red Apple" width="128" height="128"/>
                         <h1>Code Blitz Signup</h1>
                         <div>
                             <img src="https://cdn2.iconfinder.com/data/icons/font-awesome/1792/user-512.png" alt="user Icon" width="20" height="20">

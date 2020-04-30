@@ -46,8 +46,9 @@
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "installed-check": "^3.0.0",
     "log4ts": "^0.4.2",
-    "mongoose": "^5.9.9",
+    "mongoose": "^5.9.10",
     "nodemon": "^2.0.3",
     "typescript-logging": "^0.6.4"
   }

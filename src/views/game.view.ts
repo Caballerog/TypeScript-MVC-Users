@@ -1,5 +1,8 @@
 import { GameToken, Location, locations } from '../models/client.game.model';
 import { HandleMoveToken } from '../services/game.service';
+import { Ellipse } from 'pixi.js';
+import { setMaxListeners } from 'cluster';
+import { setInterval } from 'timers';
 
 
 export class GameView {
@@ -17,8 +20,9 @@ export class GameView {
             <div class='game-page'>
                 <div class='flex5'>
                     <div id='prompt'>PROMPT: Write a program to print out 10 numbers</div>
-                    <div id='language'>Javascript</div>                    
-                    <div id='timer'>TIMER &nbsp;<b>3:07</b></div>
+                    <div id='language'> Javascript </div> 
+                    <div id='timeName'> TIME </div>
+                    <div id='timer'> </div>
                 </div>
                 <div class='conveyor-container'>
                     <ul id='conveyor' />
@@ -73,7 +77,23 @@ export class GameView {
             
         `;
         this.app.innerHTML = html; 
-
+        //TIMER, COUNTDOWN
+        const startMin = 1;
+        let time = startMin *60
+        
+        setInterval(function(){
+            if(time>=0){
+                const countDownEl = document.getElementById('timer');
+                const minutes = Math.floor(time / 60);
+                let seconds = time % 60;
+                //timer won't go negative zero
+                seconds = seconds < 0 ? '0' + seconds : seconds;
+                countDownEl.innerHTML = `${minutes}: ${seconds}`;
+                time--;
+            }
+          
+        }, 1000);
+        
 
         //POP UP CODE START:
         var modal = document.getElementById("myModal");

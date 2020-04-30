@@ -148,6 +148,25 @@ div.flex5{
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-style: regular;
 }
+#timeName{
+  margin-top:10px;
+  margin-left:5px;
+  margin-right:10px;
+  color:black;
+  padding-top:2px;
+  padding-bottom:2px;
+  text-align:right;
+  font-size:13px;
+  background: 100%;
+  background-color: #D2ECD2;
+  padding-left:5px;
+  padding-right:5px;
+  border-radius: 4px;
+  box-shadow: 1.5px 1.5px #51CA51;
+  font-weight: normal;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-style: regular;
+}
 
 #budget{
   margin-top:10px;
@@ -182,6 +201,8 @@ div.flex5{
   border-radius: 4px;
   box-shadow: 1.5px 1.5px #51CA51;  
 }
+
+
 
 /*CONVEYOR BELT*/
 div.conveyor-container {

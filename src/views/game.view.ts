@@ -23,6 +23,7 @@ export class GameView {
                     <div id='language'> Javascript </div> 
                     <div id='timeName'> TIME </div>
                     <div id='timer'> </div>
+                    
                 </div>
                 <div class='conveyor-container'>
                     <ul id='conveyor' />
@@ -90,7 +91,9 @@ export class GameView {
                 seconds = seconds < 0 ? '0' + seconds : seconds;
                 countDownEl.innerHTML = `${minutes}: ${seconds}`;
                 time--;
+               
             }
+            
           
         }, 1000);
         

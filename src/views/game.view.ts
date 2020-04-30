@@ -79,24 +79,22 @@ export class GameView {
         `;
         this.app.innerHTML = html; 
         //TIMER, COUNTDOWN
-        const startMin = 1;
-        let time = startMin *60
-        
-        setInterval(function(){
-            if(time>=0){
-                const countDownEl = document.getElementById('timer');
-                const minutes = Math.floor(time / 60);
-                let seconds = time % 60;
-                //timer won't go negative zero
-                seconds = seconds < 0 ? '0' + seconds : seconds;
-                countDownEl.innerHTML = `${minutes}: ${seconds}`;
-                time--;
-               
+        let seconds=0;
+        let minutes =0; 
+
+        function stopWatch(){
+            seconds++;
+
+            if(seconds /60 ==1){
+                seconds =0; 
+                minutes++;
             }
-            
-          
-        }, 1000);
-        
+
+            //dispplay updated time values to user
+            document.getElementById('timer').innerHTML=minutes+":"+seconds;
+
+        }
+        window.setInterval(stopWatch, 1000);
 
         //POP UP CODE START:
         var modal = document.getElementById("myModal");

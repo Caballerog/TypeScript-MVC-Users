@@ -18,6 +18,7 @@ export class GameView {
 
         const html = `
             <div class='game-page'>
+                
                 <div class='flex5'>
                     <div id='prompt'>PROMPT: Write a program to print out 10 numbers</div>
                     <div id='language'> Javascript </div> 
@@ -50,9 +51,7 @@ export class GameView {
                         <div class='opponentCode'>
                         </div>
 
-                        <button id="timer" onclick="stopClock()">Stop Clock</button>
-                        
-                        <button id="myBtn"><div class='submitButton'><div class='submit'>SUBMIT CODE</div>
+                        <button id="myBtn" ><div class='submitButton'><div class='submit'>SUBMIT CODE</div>
                         </div></button>
                         <div id="myModal" class="modal">
                             <div class="modal-content">
@@ -85,50 +84,38 @@ export class GameView {
         //Define vars to hold time values
         let seconds = 0;
         let minutes = 0;
-        
+    
         //Define vars to hold "display" value
         let displaySeconds = 0;
         let displayMinutes = 0;
         
         //Stopwatch function (logic to determine when to increment next value, etc.)
         function stopWatch(){
-
             seconds++;
-
             //Logic to determine when to increment next value
             if(seconds / 60 === 1){
                 seconds = 0;
                  minutes++;
-
             }
 
-            /*//If seconds/minutes/hours are only one digit, add a leading 0 to the value
+            //If seconds/minutes/hours are only one digit, add a leading 0 to the value
             if(seconds < 10){
                 displaySeconds = "0" + seconds.toString();
             }
             else{
                 displaySeconds = seconds;
             }
-
             if(minutes < 10){
                 displayMinutes = "0" + minutes.toString();
             }
             else{
                 displayMinutes = minutes;
             }
-
-            }*/
-
             //Display updated time values to user
-            document.getElementById("timer").innerHTML =minutes + ":" + seconds;
+            document.getElementById("timer").innerHTML =displayMinutes + ":" + displaySeconds;
         }
         var intervalID= window.setInterval(stopWatch, 1000);
-        //SHOW TIME
-
-        function stopClock(){
-            clearInterval(intervalID);
-        }
-
+        
         //POP UP CODE START:
         var modal = document.getElementById("myModal");
 
@@ -140,6 +127,7 @@ export class GameView {
 
         // When the user clicks the button, open the modal 
         btn.onclick = function() {
+            clearInterval(intervalID);
         modal.style.display = "block";
         }
 

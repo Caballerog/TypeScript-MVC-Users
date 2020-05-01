@@ -15,7 +15,9 @@ export class LoginView {
         <div class='formCenter'>
             <form id='loginForm'>
                 <div class = 'box'>
-                
+
+                    
+
                     <img src="images/Codeblitz.png" alt="code Blitz" width="150" height="127"/>
                     <h1>Code Blitz</h1>
                     <div>
@@ -37,7 +39,25 @@ export class LoginView {
             </form>
         </div>
         `;
+        
         this.app.innerHTML = html;
+        /*
+        //add under <div class = 'box'> in html section 
+        
+        <div id='timer'> </div>
+        <button id="timer" onclick="stopClock()">Stop Time</button>
+        
+        //this timer stops - Leave this here
+        var myVar = setInterval(myTimer, 1000);
+
+        function myTimer() {
+        var d = new Date();
+        var t = d.toLocaleTimeString();
+        document.getElementById("timer").innerHTML = t;
+        }
+        function stopClock(){
+            clearInterval(myVar);
+        }*/
     }
     
     public bindLoginUser(handler: HandleLoginUser)

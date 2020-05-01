@@ -50,6 +50,8 @@ export class GameView {
                         <div class='opponentCode'>
                         </div>
 
+                        <button id="timer" onclick="stopClock()">Stop Clock</button>
+                        
                         <button id="myBtn"><div class='submitButton'><div class='submit'>SUBMIT CODE</div>
                         </div></button>
                         <div id="myModal" class="modal">
@@ -78,23 +80,54 @@ export class GameView {
             
         `;
         this.app.innerHTML = html; 
-        //TIMER, COUNTDOWN
-        let seconds=0;
-        let minutes =0; 
-
+        
+        //TIMER
+        //Define vars to hold time values
+        let seconds = 0;
+        let minutes = 0;
+        
+        //Define vars to hold "display" value
+        let displaySeconds = 0;
+        let displayMinutes = 0;
+        
+        //Stopwatch function (logic to determine when to increment next value, etc.)
         function stopWatch(){
+
             seconds++;
 
-            if(seconds /60 ==1){
-                seconds =0; 
-                minutes++;
+            //Logic to determine when to increment next value
+            if(seconds / 60 === 1){
+                seconds = 0;
+                 minutes++;
+
             }
 
-            //dispplay updated time values to user
-            document.getElementById('timer').innerHTML=minutes+":"+seconds;
+            /*//If seconds/minutes/hours are only one digit, add a leading 0 to the value
+            if(seconds < 10){
+                displaySeconds = "0" + seconds.toString();
+            }
+            else{
+                displaySeconds = seconds;
+            }
 
+            if(minutes < 10){
+                displayMinutes = "0" + minutes.toString();
+            }
+            else{
+                displayMinutes = minutes;
+            }
+
+            }*/
+
+            //Display updated time values to user
+            document.getElementById("timer").innerHTML =minutes + ":" + seconds;
         }
-        window.setInterval(stopWatch, 1000);
+        var intervalID= window.setInterval(stopWatch, 1000);
+        //SHOW TIME
+
+        function stopClock(){
+            clearInterval(intervalID);
+        }
 
         //POP UP CODE START:
         var modal = document.getElementById("myModal");

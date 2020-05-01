@@ -595,4 +595,11 @@ div.formCenter
   text-decoration: none;
   cursor: pointer;
 }
-
+#clock{
+  background: #000;
+  padding: 20px;
+  margin: 20px 0;
+  color: lime;
+  display: block;
+  font: 48px monospace;
+}

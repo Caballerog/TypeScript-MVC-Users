@@ -48,7 +48,7 @@
     "express": "^4.17.1",
     "installed-check": "^3.0.0",
     "log4ts": "^0.4.2",
-    "mongoose": "^5.9.10",
+    "mongoose": "^5.9.11",
     "nodemon": "^2.0.3",
     "typescript-logging": "^0.6.4"
   }

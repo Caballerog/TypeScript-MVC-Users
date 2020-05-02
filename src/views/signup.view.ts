@@ -46,7 +46,7 @@ export class SignupView {
         `;
         this.app.innerHTML = html;
     }
-
+    
     public bindAddUser(handler: HandleAddUser) {
         document.getElementById('Signup')
             .addEventListener('submit', event => {
